@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Printajmo.Models.tiskarne>
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -20,7 +21,7 @@
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <!-- Theme CSS -->
-    <link href="css/agency.min.css" rel="stylesheet">
+    <link href="css/agency.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,7 +38,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -46,7 +47,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Services</a>
+                        <a class="page-scroll" href="#tiskarne">tiskarne</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#portfolio">Portfolio</a>
@@ -70,48 +71,143 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Welcome To Our Studio!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
-                <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
+                <div class="intro-lead-in">Dobrodošli na spletni strani printajmo.si!</div>
+                <div class="intro-heading">Vse tiskarne na enem mestu</div>
+                <a href="#tiskarne" class="page-scroll btn btn-xl">Nadaljuj</a>
             </div>
         </div>
     </header>
-    <!-- Services Section -->
-    <section id="services">
+    <!-- tiskarne Section -->
+    <section id="tiskarne">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Services</h2>
+                    <h2 class="section-heading">Tiskarne</h2>
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">E-Commerce</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Responsive Design</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Web Security</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+            <div class="row">
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="table-tiskarne" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.naziv)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.a4cb)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.a4barvno)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.a4cboboje)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.a4barvnooboje)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ulica)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.postnast)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.mesto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.telefonska)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.dodatno)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.naziv)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.a4cb)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.a4barvno)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.a4cboboje)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.a4barvnooboje)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ulica)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.postnast)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.mesto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.telefonska)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.dodatno)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.idtiskarne }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.idtiskarne }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.idtiskarne })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="service-heading">E-Commerce</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="service-heading">Responsive Design</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="service-heading">Web Security</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+                </div>
+            </div>
     </section>
     <!-- Portfolio Grid Section -->
     <section id="portfolio" class="bg-light-gray">
@@ -605,7 +701,7 @@
                                 <h2>Project Name</h2>
                                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
                                 <img class="img-responsive img-centered" src="img/portfolio/escape-preview.png" alt="">
-                                <p>Escape is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Escape is a one page web template that was designed with agencies in mind. This template is ideal for those looking for a simple one page solution to describe your business and offer your services.</p>
+                                <p>Escape is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Escape is a one page web template that was designed with agencies in mind. This template is ideal for those looking for a simple one page solution to describe your business and offer your tiskarne.</p>
                                 <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/escape-one-page-psd-web-template/">FreebiesXpress.com</a>.</p>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
                             </div>

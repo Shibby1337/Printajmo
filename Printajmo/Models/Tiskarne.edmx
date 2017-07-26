@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="tiskarne_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tiskarne">
+          <Key>
+            <PropertyRef Name="idtiskarne" />
+          </Key>
+          <Property Name="idtiskarne" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="naziv" Type="varchar" MaxLength="45" />
+          <Property Name="a4cb" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="a4barvno" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="a4cboboje" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="a4barvnooboje" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="ulica" Type="varchar" MaxLength="45" />
+          <Property Name="postnast" Type="int" />
+          <Property Name="mesto" Type="varchar" MaxLength="45" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
+          <Property Name="telefonska" Type="varchar" MaxLength="45" />
+          <Property Name="dodatno" Type="varchar" MaxLength="200" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="tiskarne_ModelStoreContainer">
+          <EntitySet Name="tiskarne" EntityType="Self.tiskarne" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tiskarne_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tiskarne">
+          <Key>
+            <PropertyRef Name="idtiskarne" />
+          </Key>
+          <Property Name="idtiskarne" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="a4cb" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="a4barvno" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="a4cboboje" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="a4barvnooboje" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="ulica" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="postnast" Type="Int32" />
+          <Property Name="mesto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="telefonska" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dodatno" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="Double" Nullable="false" />
+          <Property Name="latitude" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="tiskarne_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tiskarne" EntityType="Self.tiskarne" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tiskarne_ModelStoreContainer" CdmEntityContainer="tiskarne_Entities">
+          <EntitySetMapping Name="tiskarne">
+            <EntityTypeMapping TypeName="tiskarne_Model.tiskarne">
+              <MappingFragment StoreEntitySet="tiskarne">
+                <ScalarProperty Name="idtiskarne" ColumnName="idtiskarne" />
+                <ScalarProperty Name="naziv" ColumnName="naziv" />
+                <ScalarProperty Name="a4cb" ColumnName="a4cb" />
+                <ScalarProperty Name="a4barvno" ColumnName="a4barvno" />
+                <ScalarProperty Name="a4cboboje" ColumnName="a4cboboje" />
+                <ScalarProperty Name="a4barvnooboje" ColumnName="a4barvnooboje" />
+                <ScalarProperty Name="ulica" ColumnName="ulica" />
+                <ScalarProperty Name="postnast" ColumnName="postnast" />
+                <ScalarProperty Name="mesto" ColumnName="mesto" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefonska" ColumnName="telefonska" />
+                <ScalarProperty Name="dodatno" ColumnName="dodatno" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
