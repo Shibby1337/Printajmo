@@ -65,9 +65,14 @@
                     <li>
                         <a class="page-scroll" href="#team">Team</a>
                     </li>
+
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
+                    <li>
+                        <a class="page-scroll" href="#prijava" data-toggle="modal" data-target=".bs-modal-sm">Prijava</a>
+                    </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -93,9 +98,9 @@
                 </div>
             </div>
             <div id="idTabela" class="row">
-                @Html.Partial("_Tabela", Model)
+                @Html.Partial("_Tabela")
             </div>
-            </div>
+        </div>
     </section>
     <!-- Portfolio Grid Section -->
     <section id="portfolio" class="bg-light-gray">
@@ -419,6 +424,171 @@
             </div>
         </div>
     </section>
+    @{
+        var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+        Console.Write(val1);
+        Console.WriteLine();
+        if (val1 == true)
+        {
+            Console.Write("RES");
+        }
+        else
+        {
+            Console.Write("NI RES");
+        }
+    }
+    <p>The value of myMessage is: @val1</p>
+    <!-- Prijava Section -->
+    <section id="prijava">
+        <!-- Button trigger modal -->
+        @*<div class="container">
+                <hr class="prettyline">
+                <br>
+                <center>
+                    <h1><b>Sorry</b></h1>
+                    <h3>You need to sign in or register for this service</h3>
+                    <br>
+                    <button class="btn btn-primary btn-lg" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Register</button>
+                </center>
+                <br>
+                <hr class="prettyline">
+            </div>*@
+        @*@using Printajmo.Models
+            @model LoginViewModel
+            @{
+                ViewBag.Title = "Log in";
+            }
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()*@
+        <!-- Modal -->
+        <div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content paddingBost">
+                    <br>
+                    <div class="bs-example bs-example-tabs">
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active"><a href="#signin" data-toggle="tab">Prijava</a></li>
+                            <li class=""><a href="#signup" data-toggle="tab">Registracija</a></li>
+                            <li class=""><a href="#why" data-toggle="tab">Why?</a></li>
+                        </ul>
+                    </div>
+                    <div class="modal-body">
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade in" id="why">
+                                <p>We need this information so that you can receive access to the site and its content. Rest assured your information will not be sold, traded, or given to anyone.</p>
+                                <p></p><br> Please contact <a mailto:href="JoeSixPack@Sixpacksrus.com"></a>JoeSixPack@Sixpacksrus.com</a> for any other inquiries.</p>
+                            </div>
+                            <div class="tab-pane fade active in" id="signin">
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <!-- Sign In Form -->
+                                        <!-- Text input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="userid">Uporabniško ime:</label>
+                                            <div class="controls">
+                                                <input required="" id="userid" name="userid" type="text" class="form-control" class="input-medium" required="">
+                                            </div>
+                                        </div>
+                                        <!-- Password input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="passwordinput">Geslo:</label>
+                                            <div class="controls">
+                                                <input required="" id="passwordinput" name="passwordinput" class="form-control" type="password" class="input-medium">
+                                            </div>
+                                        </div>
+                                        <!-- Multiple Checkboxes (inline) -->
+                                        <div class="control-group check-login">
+                                            <label class="control-label" for="rememberme"></label>
+                                            <div class="controls">
+                                                <label class="checkbox inline" for="rememberme-0">
+                                                    <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
+                                                    Zapomni si me
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="signin"></label>
+                                            <div class="controls">
+                                                <button id="signin" name="signin" class="btn btn-xl button-login">Prijavi</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="signup">
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <!-- Sign Up Form -->
+                                        <!-- Text input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="Email">Email:</label>
+                                            <div class="controls">
+                                                <input id="Email" name="Email" class="form-control" type="text" class="input-large" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="userid">Uporabniško ime:</label>
+                                            <div class="controls">
+                                                <input id="userid" name="userid" class="form-control" type="text" class="input-large" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Password input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="password">Geslo:</label>
+                                            <div class="controls">
+                                                <input id="password" name="password" class="form-control" type="password" class="input-large" required="">
+                                                <em>1-8 Characters</em>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="control-group">
+                                            <label class="control-label" for="reenterpassword">Ponovi geslo:</label>
+                                            <div class="controls">
+                                                <input id="reenterpassword" class="form-control" name="reenterpassword" type="password" class="input-large" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Multiple Radios (inline) -->
+                                        <br>
+                                        <div class="control-group">
+                                            <label class="control-label" for="humancheck">Humanity Check:</label>
+                                            <div class="controls  check-login">
+                                                <label class="radio inline" for="humancheck-0">
+                                                    <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot
+                                                </label>
+                                                <label class="radio inline" for="humancheck-1">
+                                                    <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="confirmsignup"></label>
+                                            <div class="controls">
+                                                <button id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login">Registriraj</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <center>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer>
         <div class="container">
             <div class="row">
@@ -641,4 +811,3 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </body>
 </html>
-
