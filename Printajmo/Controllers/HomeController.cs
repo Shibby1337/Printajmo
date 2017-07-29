@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using PagedList;
 namespace Printajmo.Controllers
 {
     public class HomeController : Controller
@@ -12,26 +12,84 @@ namespace Printajmo.Controllers
         Models.tiskarne_Entities _db;
         public HomeController()
         {
-            _db = new Models.tiskarne_Entities();
+           if(_db == null)
+                _db = new Models.tiskarne_Entities();
         }
-        public ActionResult Index()
+        public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            var newTiskarna = new Models.tiskarne();
-            newTiskarna.naziv = "TEST";
-            var dbCtx = new Models.tiskarne_Entities();
-                //Add  object into  DBset
-                //       dbCtx.tiskarne.Add(newTiskarna);
+           
 
-                // call SaveChanges method to object into database
-                // dbCtx.SaveChanges();
-                var list = dbCtx.tiskarne.ToList();
+            ViewBag.nazivSortParm = String.IsNullOrEmpty(sortOrder) ? "naziv_desc" : "";
+            ViewBag.A4CBSortParm = sortOrder == "A4CB_desc" ? "A4CB_asc" : "A4CB_desc";
+            ViewBag.A4BSortParm = sortOrder == "A4B_desc" ? "A4B_asc" : "A4B_desc";
+            ViewBag.A4CBOSortParm = sortOrder == "A4CBO_desc" ? "A4CBO_asc" : "A4CBO_desc";
+            ViewBag.A4BOSortParm = sortOrder == "A4BO_desc" ? "A4BO_asc" : "A4BO_desc";
 
-                /*foreach (var obj in list)
-                {
-                    Debug.WriteLine(obj.naziv);
-                }*/
-            ViewData.Model = _db;
-            return View(list);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var tiskarne = from s in _db.tiskarne
+                           select s;
+            tiskarne = tiskarne.OrderBy(s => s.naziv);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tiskarne = tiskarne.Where(s => s.naziv.Contains(searchString)
+                                       || s.mesto.Contains(searchString)
+                                        || s.ulica.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "naziv_desc":
+                    tiskarne = tiskarne.OrderByDescending(s => s.naziv);
+                    break;
+                case "A4CB_desc":
+                    tiskarne = tiskarne.OrderBy(s => s.a4cb);
+                    break;
+                case "A4CB_asc":
+                    tiskarne = tiskarne.OrderByDescending(s => s.a4cb);
+                    break;
+                case "A4B_desc":
+                    tiskarne = tiskarne.OrderBy(s => s.a4barvno);
+                    break;
+                case "A4B_asc":
+                    tiskarne = tiskarne.OrderByDescending(s => s.a4barvno);
+                    break;
+                case "A4CBO_desc":
+                    tiskarne = tiskarne.OrderBy(s => s.a4cboboje);
+                    break;
+                case "A4CBO_asc":
+                    tiskarne = tiskarne.OrderByDescending(s => s.a4cboboje);
+                    break;
+                case "A4BO_desc":
+                    tiskarne = tiskarne.OrderBy(s => s.a4barvnooboje);
+                    break;
+                case "A4BO_asc":
+                    tiskarne = tiskarne.OrderByDescending(s => s.a4barvnooboje);
+                    break;
+                default:
+                    tiskarne = tiskarne.OrderBy(s => s.naziv);
+                    break;
+            }
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            return tiskarne.ToPagedList(pageNumber, pageSize);
+        }
+        public ActionResult Index(string sortOrder, string currentFilter, string strSearch, int? page)
+        {
+            return View(GetModel(sortOrder, currentFilter, strSearch, page));
+        }
+
+        public ActionResult AjaxTabela(string sortOrder, string currentFilter, string strSearch, int? page)
+        {
+            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, strSearch, page));
         }
 
         public ActionResult About()

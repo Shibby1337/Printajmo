@@ -1,0 +1,141 @@
+﻿
+    @model PagedList.IPagedList<Printajmo.Models.tiskarne>
+    @using PagedList.Mvc;
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <p class="inline">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    @using (Html.BeginForm("Index", "HomeController", FormMethod.Get))
+    {
+        <p class="inline">
+            Iskanje: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <button type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </p>
+    }
+<div id="loading"></div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                       {
+                           OnBegin = "onBegin",
+                           OnComplete = "onComplete",
+                           HttpMethod = "GET",
+                           UpdateTargetId = "idTabela",
+                           InsertionMode = InsertionMode.Replace
+                       }) 
+                        
+                        </th>
+                        <th>
+                            naslov
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("A4CB", "AjaxTabela", new { sortOrder = ViewBag.A4CBSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                       {
+                           OnBegin = "onBegin",
+                           OnComplete = "onComplete",
+                           HttpMethod = "GET",
+                           UpdateTargetId = "idTabela",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                         </th>
+                        <th>
+                            @Ajax.ActionLink("A4Barvno", "AjaxTabela", new { sortOrder = ViewBag.A4BSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                       {
+                           OnBegin = "onBegin",
+                           OnComplete = "onComplete",
+                           HttpMethod = "GET",
+                           UpdateTargetId = "idTabela",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("A4CBOboje", "AjaxTabela", new { sortOrder = ViewBag.A4CBOSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                       {
+                           OnBegin = "onBegin",
+                           OnComplete = "onComplete",
+                           HttpMethod = "GET",
+                           UpdateTargetId = "idTabela",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("A4BOboje", "AjaxTabela", new { sortOrder = ViewBag.A4BOSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                       {
+                           OnBegin = "onBegin",
+                           OnComplete = "onComplete",
+                           HttpMethod = "GET",
+                           UpdateTargetId = "idTabela",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.naziv)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ulica), @Html.DisplayFor(modelItem => item.mesto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.a4cb)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.a4barvno)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.a4cboboje)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.a4barvnooboje)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.idtiskarne }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.idtiskarne }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.idtiskarne })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("AjaxTabela", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+            {
+                Display = PagedListDisplayMode.IfNeeded,
+                MaximumPageNumbersToDisplay = 10
+            },
+            new AjaxOptions
+            {
+                OnBegin = "onBegin",
+                OnComplete = "onComplete",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "Get",
+                UpdateTargetId = "idTabela"
+            }))  
+        </div>
+    </div>
+<script>
+                            function onBegin() {
+                                $("#loading").addClass("loading");
+                            }
+
+                            function onComplete() {
+                                $("#loading").removeClass("loading");
+                            }
+</script>

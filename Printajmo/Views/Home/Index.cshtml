@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Printajmo.Models.tiskarne>
+﻿@model PagedList.IPagedList<Printajmo.Models.tiskarne>
+@using PagedList.Mvc;
+
 @{
     ViewBag.Title = "Home Page";
 }
@@ -28,6 +30,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
     <![endif]-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body id="page-top" class="index">
     <!-- Navigation -->
@@ -82,131 +89,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Tiskarne</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-            <div class="row">
-                <p>
-                    @Html.ActionLink("Create New", "Create")
-                </p>
+            <div id="idTabela" class="row">
+                @Html.Partial("_Tabela", Model)
             </div>
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="table-tiskarne" class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.naziv)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.a4cb)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.a4barvno)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.a4cboboje)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.a4barvnooboje)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ulica)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.postnast)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.mesto)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.email)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.telefonska)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.dodatno)
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.naziv)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.a4cb)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.a4barvno)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.a4cboboje)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.a4barvnooboje)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ulica)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.postnast)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.mesto)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.telefonska)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.dodatno)
-                                    </td>
-                                   
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.idtiskarne }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.idtiskarne }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.idtiskarne })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-                <div class="row text-center">
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="service-heading">E-Commerce</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="service-heading">Responsive Design</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="service-heading">Web Security</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                </div>
             </div>
     </section>
     <!-- Portfolio Grid Section -->
@@ -750,5 +638,7 @@
     <script src="js/contact_me.js"></script>
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </body>
 </html>
+
