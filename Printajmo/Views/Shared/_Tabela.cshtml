@@ -3,19 +3,20 @@
     @using PagedList.Mvc;
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-
-    <p class="inline">
+    <div class="row">
+    <p class="pull-left" style="padding-left:15px">
         @Html.ActionLink("Create New", "Create")
     </p>
     @using (Html.BeginForm("Index", "HomeController", FormMethod.Get))
     {
-        <p class="inline">
+        <p class="pull-right" style="padding-right:15px">
             Iskanje: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
             <button type="submit">
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </p>
     }
+</div>
 <div id="loading"></div>
     <div class="row">
         <div class="table-responsive">
