@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="30962a88df6c4377b6c958002d9d2b2d" Name="Diagram1">
-        <EntityTypeShape EntityType="tiskarne_Model.tiskarne" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="beac3ebfa33b46849df6dd81f9724cd8" Name="Diagram1">
+        <EntityTypeShape EntityType="TiskarneModel.tiskarne" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

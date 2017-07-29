@@ -9,11 +9,11 @@ namespace Printajmo.Controllers
 {
     public class HomeController : Controller
     {
-        Models.tiskarne_Entities _db;
+        Models.TiskarneEntities _db;
         public HomeController()
         {
            if(_db == null)
-                _db = new Models.tiskarne_Entities();
+                _db = new Models.TiskarneEntities();
         }
         public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string searchString, string currentFilter, int? page)
         {
