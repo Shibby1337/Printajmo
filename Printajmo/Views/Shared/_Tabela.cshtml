@@ -9,7 +9,7 @@
     </p>
     @using (Html.BeginForm("Index", "HomeController", FormMethod.Get))
     {
-        <p class="pull-right" style="padding-right:15px">
+        <p class="pull-right" style="padding-left:15px">
             Iskanje: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
             <button type="submit">
                 <span class="glyphicon glyphicon-search"></span>
