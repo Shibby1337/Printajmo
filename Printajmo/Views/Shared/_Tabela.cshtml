@@ -7,15 +7,46 @@
     <p class="pull-left" style="padding-left:15px">
         @Html.ActionLink("Create New", "Create")
     </p>
-    @using (Html.BeginForm("Index", "HomeController", FormMethod.Get))
-    {
+   @using (Ajax.BeginForm("AjaxTabela", "HomeController",
+         new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
+   {
         <p class="pull-right" style="padding-left:15px">
-            Iskanje: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            Iskanje: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { onkeydown = "searchCategories();", onkeyup = "searchCategories();", onkeypress = "searchCategories();" })
             <button type="submit">
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </p>
     }
+        @using (Ajax.BeginForm("AjaxTabela", "HomeController", null,
+            new AjaxOptions() {HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
+        {
+            <div id="SearchCricketer" style="float:right;">
+                <input type="text" class="form-control" id="TxtSearchCricketer" placeholder="Search" />
+            </div>
+        }
+
+        <script type="text/javascript">
+
+            var timer;
+            $("#TxtSearchCricketer").on('keyup', function (event) {
+                clearTimeout(timer);  //clear any running timeout on key up
+                timer = setTimeout(function () { //then give it a second to see if the user is finished
+                    $.ajax({
+                        url:'@Url.Action("AjaxTabela", "HomeController")',
+                        dataType:"html",
+                        data:{sortOrder:@ViewBag.NazivSort, currentFilter:@ViewBag.CurrentFilter, pageSize:@ViewBag.PageSize, searchString:$('#TxtSearchCricketer').val()},
+                        type:"Get",
+                        success: function (data) {
+                            $("#loading").addClass("loading");
+                            $('#idTabela').html(data);
+                        },
+                        beforeSend: function () {
+                            $("#loading").removeClass("loading");
+                        }
+                    })
+                });
+            });
+        </script>  
 </div>
 <div id="loading"></div>
     <div class="row">
