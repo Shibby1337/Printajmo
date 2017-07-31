@@ -13,10 +13,10 @@ namespace Printajmo.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TiskarneEntities : DbContext
+    public partial class tiskarneEntities : DbContext
     {
-        public TiskarneEntities()
-            : base("name=TiskarneEntities")
+        public tiskarneEntities()
+            : base("name=tiskarneEntities")
         {
         }
     
