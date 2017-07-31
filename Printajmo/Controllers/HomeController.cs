@@ -82,14 +82,14 @@ namespace Printajmo.Controllers
             int pageNumber = (page ?? 1);
             return tiskarne.ToPagedList(pageNumber, pageSize);
         }
-        public ActionResult Index(string sortOrder, string currentFilter, string strSearch, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(GetModel(sortOrder, currentFilter, strSearch, page));
+            return View(GetModel(sortOrder, currentFilter, searchString, page));
         }
 
-        public ActionResult AjaxTabela(string sortOrder, string currentFilter, string strSearch, int? page)
+        public ActionResult AjaxTabela(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, strSearch, page));
+            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
         }
 
         public ActionResult About()

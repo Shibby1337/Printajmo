@@ -70,7 +70,7 @@
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#prijava" data-toggle="modal" data-target=".bs-modal-sm">Prijava</a>
+                        <a href="#prijava" data-toggle="modal" data-target=".bs-modal-sm">Prijava</a>
                     </li>
 
                 </ul>
@@ -470,22 +470,17 @@
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a href="#signin" data-toggle="tab">Prijava</a></li>
                             <li class=""><a href="#signup" data-toggle="tab">Registracija</a></li>
-                            <li class=""><a href="#why" data-toggle="tab">Why?</a></li>
                         </ul>
                     </div>
                     <div class="modal-body">
                         <div id="myTabContent" class="tab-content">
-                            <div class="tab-pane fade in" id="why">
-                                <p>We need this information so that you can receive access to the site and its content. Rest assured your information will not be sold, traded, or given to anyone.</p>
-                                <p></p><br> Please contact <a mailto:href="JoeSixPack@Sixpacksrus.com"></a>JoeSixPack@Sixpacksrus.com</a> for any other inquiries.</p>
-                            </div>
                             <div class="tab-pane fade active in" id="signin">
                                 <form class="form-horizontal">
                                     <fieldset>
                                         <!-- Sign In Form -->
                                         <!-- Text input-->
                                         <div class="control-group">
-                                            <label class="control-label" for="userid">Uporabniško ime:</label>
+                                            <label class="control-label" for="userid">Email:</label>
                                             <div class="controls">
                                                 <input required="" id="userid" name="userid" type="text" class="form-control" class="input-medium" required="">
                                             </div>
@@ -511,7 +506,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="signin"></label>
                                             <div class="controls">
-                                                <button id="signin" name="signin" class="btn btn-xl button-login">Prijavi</button>
+                                                <button id="signin" name="signin" class="btn btn-xl button-login">Prijava</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -542,7 +537,7 @@
                                             <label class="control-label" for="password">Geslo:</label>
                                             <div class="controls">
                                                 <input id="password" name="password" class="form-control" type="password" class="input-large" required="">
-                                                <em>1-8 Characters</em>
+                                                <em>1-8 Znakov</em>
                                             </div>
                                         </div>
 
@@ -557,13 +552,13 @@
                                         <!-- Multiple Radios (inline) -->
                                         <br>
                                         <div class="control-group">
-                                            <label class="control-label" for="humancheck">Humanity Check:</label>
+                                            <label class="control-label" for="humancheck">Zaščita pred nezaželjenimi prijavami:</label>
                                             <div class="controls  check-login">
                                                 <label class="radio inline" for="humancheck-0">
-                                                    <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot
+                                                    <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">Sem robot
                                                 </label>
                                                 <label class="radio inline" for="humancheck-1">
-                                                    <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human
+                                                    <input type="radio" name="humancheck" id="humancheck-1" value="human">Sem človek
                                                 </label>
                                             </div>
                                         </div>
@@ -582,7 +577,7 @@
                     </div>
                     <div class="modal-footer">
                         <center>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+                            <button type="button" class="btn btn-default btn-group-lg" data-dismiss="modal">Zapri</button>
                         </center>
                     </div>
                 </div>
