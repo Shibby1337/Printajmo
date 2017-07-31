@@ -340,8 +340,6 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
@@ -404,6 +402,13 @@
     <Content Include="Models\Tiskarne.edmx.diagram">
       <DependentUpon>Tiskarne.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_PrijavaPartial.cshtml" />
+    <Content Include="Views\Shared\_RegistracijaPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginRegPartial.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\_ForgotPassword.cshtml" />
+    <Content Include="Views\Shared\_ForgotPasswordConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

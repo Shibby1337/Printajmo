@@ -1,0 +1,84 @@
+﻿@model Printajmo.Models.RegisterViewModel
+
+
+<!--REGISTRACIJA -->
+
+
+<div class="tab-pane fade" id="signup">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <!-- Sign Up Form -->
+            <!-- Text input-->
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="control-group">
+                @*<label class="control-label" for="userid">Uporabniško ime:</label>*@
+                @Html.LabelFor(m => m.Uporabnisko, new { @class = "control-label" })
+                <div class="controls">
+                    @*<input id="userid" name="userid" class="form-control" type="text" class="input-large" required="">*@
+                    @Html.TextBoxFor(m => m.Uporabnisko, new { @class = "form-control" })
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="control-group">
+                @*<label class="control-label" for="Email">Email:</label>*@
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                <div class="controls">
+                    @*<input id="Email" name="Email" class="form-control" type="text" class="input-large" required="">*@
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+            <!-- Password input-->
+            <div class="control-group">
+                @*<label class="control-label" for="password">Geslo:</label>*@
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                <div class="controls">
+                    @*<input id="password" name="password" class="form-control" type="password" class="input-large" required="">*@
+                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    <em>1-8 Characters</em>
+                </div>
+            </div>
+
+            <!-- Text input-->
+           <div class="control-group">
+                @*<label class="control-label" for="reenterpassword">Ponovi geslo:</label>*@
+               @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                <div class="controls">
+                    @*<input id="reenterpassword" class="form-control" name="reenterpassword" type="password" class="input-large" required="">*@
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <!-- Multiple Radios(inline) -->
+            <br>
+            @*<div class="control-group">
+                <label class="control-label" for="humancheck">Humanity Check:</label>
+                <div class="controls  check-login">
+                    <label class="radio inline" for="humancheck-0">
+                        <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot
+                    </label>
+                    <label class="radio inline" for="humancheck-1">
+                        <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human
+                    </label>
+                </div>
+            </div>*@
+
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="confirmsignup"></label>
+                <div class="controls">
+                    <input type="submit" class="btn btn-xl button-login" value="Registriraj" />
+                    @*<button id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login">Registriraj</button>*@
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+  
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
