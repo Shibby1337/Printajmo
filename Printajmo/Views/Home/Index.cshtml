@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<Printajmo.Models.tiskarne>
 @using PagedList.Mvc;
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Home Page";
@@ -72,24 +73,48 @@
                     </li>
 
                     @{
+
                         var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                        Console.Write(val1);
-                        Console.WriteLine();
+
                         if (val1 == true)
                         {
-                           
-                        }
-                        else
-                        {
+                            if (Request.IsAuthenticated)
+                            {
+                                <li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                                    <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
+
+                               }</li>
+                            }
+                            else
+                            {
+
+                            }
+                                @*<a href = "javascript:document.getElementById('logoutForm').submit()"> Odjava </a>*@
+                                 @*<a href="/Account/LogOff?id=logoutForm">Odjava</a>*@
                             <li>
-                                <a href="#prijava" data-toggle="modal" data-target=".bs-modal-sm">Prijava</a>
+                                <a href="#racun" data-toggle="modal" data-target="#myModal2">Racun</a>
                             </li>
+                                @*@Html.Partial("_LoginPartial");*@
+
+
+
+                                }
+                                else {
+                             <li>
+                              <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
+                            </li>
+    
+
                         }
-                    }
-                   
-                    <li>
-                        @Html.Partial("_LoginPartial")
-                    </li>
+                        }
+
+
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -456,6 +481,9 @@
     <!-- Prijava Section -->
     <section id="prijava">
        @Html.Partial("_LoginRegPartial", new Printajmo.Models.LoginViewModel())
+    </section>
+    <section id="racun">
+        @Html.Partial("_UrediRacun", new Printajmo.Models.ChangePasswordViewModel());
     </section>
     <footer>
         <div class="container">

@@ -409,6 +409,7 @@
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_ForgotPassword.cshtml" />
     <Content Include="Views\Shared\_ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\_UrediRacun.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
