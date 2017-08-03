@@ -21,6 +21,12 @@ p {
 p.large {
   font-size: 16px;
 }
+#naslovTH:hover {
+    color:black;
+}
+.fa:hover {
+    color:#f01313;
+}
 a,
 a:hover,
 a:focus,
@@ -31,7 +37,7 @@ a.active {
 a {
     color:#000000;
 }
-    a:hover + .glyphicon-sort {
+    a:hover + .fa {
     color:#f01313!important;
     text-decoration: none;
     }

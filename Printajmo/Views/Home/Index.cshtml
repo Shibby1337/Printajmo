@@ -37,6 +37,13 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+                            function onBegin() {
+                                $("#loading").addClass("loading"); }
+                            function onComplete() {
+                                $("#loading").removeClass("loading");
+                            }
+    </script>
 </head>
 <body id="page-top" class="index">
     <!-- Navigation -->
@@ -140,10 +147,15 @@
                 </div>
             </div>
             @using (Ajax.BeginForm("AjaxTabela", "Home",
-         new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
+         new AjaxOptions {
+             OnBegin = "onBegin",
+             OnComplete = "onComplete",
+             HttpMethod = "GET",
+             InsertionMode = InsertionMode.Replace,
+             UpdateTargetId = "idTabela"
+         }))
             {
                 <div class="pull-right">
-
                     <input type="text" id="searchString" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
                     <button type="submit" class="btn">
                         <span class="glyphicon glyphicon-search"></span>
@@ -727,3 +739,4 @@
         });
         });
 </script>*@
+

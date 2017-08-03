@@ -30,23 +30,23 @@
                            InsertionMode = InsertionMode.Replace
                        })*@
                       
-                           <a id="Naziv" name="naziv" onclick="sort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
+                          <a id="Naziv" name="naziv" onclick="textClickSort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
                       
                         </th>
                         <th>
-                            <a>Naslov</a>
+                            <a id="naslovTH">Naslov</a>
                         </th>
                         <th>
-                            <a id="A4CB" onclick="sort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
+                            <a id="A4CB" onclick="textClickSort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
                          </th>
                         <th>
-                            <a id="A4B" onclick="sort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
+                            <a id="A4B" onclick="textClickSort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th>
-                            <a id="A4CBO" onclick="sort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
+                            <a id="A4CBO" onclick="textClickSort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th>
-                            <a id="A4BO" onclick="sort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
+                            <a id="A4BO" onclick="textClickSort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th></th>
                     </tr>
@@ -119,30 +119,34 @@
                             }
 </script>
 <script>
-$('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function() {
-	$(this).removeClass('fa-sort');
-	this.asc = !this.asc;
-	if (this.asc) {
-	    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
-	} else {
-	    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
-	}
-});
+    $('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function () {
+    //$(this).removeClass('fa-sort');
+    //    alert(!this.asc);
+	//this.asc = !this.asc;
+	//if (this.asc) {
+	//    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
+	//} else {
+	//    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
+	//}
+	var id = $(this).prev().attr("id");
+	sort(id);
+    });
 
-</script>
+    function textClickSort(elem) {
+        var id = $(elem).attr("id");
+        sort(id);
+    }
 
-<script>
-    function sort(elem) {
+    function sort(id) {
         var sortParm;
         var CurrentFilter = "@ViewBag.CurrentFilter";
         var PageSize = "@ViewBag.PageSize";
-        var id = $(elem).attr("id");
         switch (id) {
             case "Naziv":
                 sortParm = "@ViewBag.nazivSortParm";
                 break;
             case "A4CB":
-                sortParm =" @ViewBag.A4CBSortParm";
+                sortParm = "@ViewBag.A4CBSortParm";
                 break;
             case "A4B":
                 sortParm = "@ViewBag.A4BSortParm";
@@ -158,13 +162,55 @@ $('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function() {
             type: "GET",
             url: "/Home/AjaxTabela",
             data: { sortOrder: sortParm, currentFilter: CurrentFilter, pageSize: PageSize },
+            beforeSend: onBegin(),
             success: function (response) {
                 $("#idTabela").html(response);
+                onComplete();
+                sortGlyph(sortParm);
             },
             error: function (e) {
                 alert("error occured" + e);
             }
         });
+    }
+
+    function sortGlyph(sortParm) {
+        $("#A4CB").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4B").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4CBO").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4BO").next().removeClass().addClass("fa fa-fw fa-sort");
+        switch (sortParm) {
+            case "naziv_desc":
+                $("#Naziv").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "":
+                $("#Naziv").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4CB_desc":
+                $("#A4CB").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4CB_asc":
+                $("#A4CB").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4B_desc":
+                $("#A4B").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4B_asc":
+                $("#A4B").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4CBO_desc":
+                $("#A4CBO").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4CBO_asc":
+                $("#A4CBO").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4BO_desc":
+                $("#A4BO").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4BO_asc":
+                $("#A4BO").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+        }
     }
 </script>
 
