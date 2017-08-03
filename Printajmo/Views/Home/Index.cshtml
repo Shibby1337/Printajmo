@@ -114,6 +114,17 @@
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
+            @using (Ajax.BeginForm("AjaxTabela", "Home",
+         new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
+            {
+                <div class="pull-right">
+
+                    <input type="text" id="searchString" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
+                    <button type="submit" class="btn">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
+            }
             <div id="idTabela" class="row">
                 @Html.Partial("_Tabela", Model)
             </div>
@@ -668,3 +679,23 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </body>
 </html>
+@*<script type="text/javascript">
+    var timer;
+    $("#searchString").on('keyup', function (event){
+        clearTimeout(timer);  //clear any running timeout on key up
+        timer = setTimeout(function () { //then give it a second to see if the user is finished
+            $.ajax({
+                url: "/Home/AjaxTabela",
+                data: {sortOrder:'', searchString: $('#searchString').val(), currentFilter: "@ViewBag.CurrentFilter", pageSize: "@ViewBag.PageSize" },
+                type:"Get",
+                success: function (data) {
+                    $("#loading").removeClass("loading");
+                    $("#idTabela").html(data);
+                },
+                beforeSend: function () {
+                    $("#loading").addClass("loading");
+                }
+            })
+        });
+        });
+</script>*@

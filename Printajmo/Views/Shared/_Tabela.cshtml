@@ -3,50 +3,16 @@
     @using PagedList.Mvc;
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="row">
-    <p class="pull-left" style="padding-left:15px">
-        @Html.ActionLink("Create New", "Create")
-    </p>
-   @using (Ajax.BeginForm("AjaxTabela", "HomeController",
-         new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
-   {
-        <p class="pull-right" style="padding-left:15px">
-            Iskanje: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { onkeydown = "searchCategories();", onkeyup = "searchCategories();", onkeypress = "searchCategories();" })
-            <button type="submit">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
-        </p>
-    }
-        @using (Ajax.BeginForm("AjaxTabela", "HomeController", null,
-            new AjaxOptions() {HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "idTabela" }))
-        {
-            <div id="SearchCricketer" style="float:right;">
-                <input type="text" class="form-control" id="TxtSearchCricketer" placeholder="Search" />
-            </div>
-        }
+    <div class="pull-left">
+        <a class="btn icon-btn btn-default btn-add" href="#">
+            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success colors-printajmo-orageDark"></span>
+            Dodaj
+        </a>
+    </div>
 
-        <script type="text/javascript">
-
-            var timer;
-            $("#TxtSearchCricketer").on('keyup', function (event) {
-                clearTimeout(timer);  //clear any running timeout on key up
-                timer = setTimeout(function () { //then give it a second to see if the user is finished
-                    $.ajax({
-                        url:'@Url.Action("AjaxTabela", "HomeController")',
-                        dataType:"html",
-                        data:{sortOrder:@ViewBag.NazivSort, currentFilter:@ViewBag.CurrentFilter, pageSize:@ViewBag.PageSize, searchString:$('#TxtSearchCricketer').val()},
-                        type:"Get",
-                        success: function (data) {
-                            $("#loading").addClass("loading");
-                            $('#idTabela').html(data);
-                        },
-                        beforeSend: function () {
-                            $("#loading").removeClass("loading");
-                        }
-                    })
-                });
-            });
-        </script>  
+      
 </div>
 <div id="loading"></div>
     <div class="row">
@@ -55,58 +21,32 @@
                 <thead>
                     <tr>
                         <th>
-                            @Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                            @*@Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
                        {
                            OnBegin = "onBegin",
-                           OnComplete = "onComplete",
+                           OnComplete = "onCompleteNaziv",
                            HttpMethod = "GET",
                            UpdateTargetId = "idTabela",
                            InsertionMode = InsertionMode.Replace
-                       }) 
-                        
+                       })*@
+                      
+                           <a id="Naziv" name="naziv" onclick="sort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
+                      
                         </th>
                         <th>
-                            naslov
+                            <a>Naslov</a>
                         </th>
                         <th>
-                            @Ajax.ActionLink("A4CB", "AjaxTabela", new { sortOrder = ViewBag.A4CBSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
-                       {
-                           OnBegin = "onBegin",
-                           OnComplete = "onComplete",
-                           HttpMethod = "GET",
-                           UpdateTargetId = "idTabela",
-                           InsertionMode = InsertionMode.Replace
-                       })
+                            <a id="A4CB" onclick="sort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
                          </th>
                         <th>
-                            @Ajax.ActionLink("A4Barvno", "AjaxTabela", new { sortOrder = ViewBag.A4BSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
-                       {
-                           OnBegin = "onBegin",
-                           OnComplete = "onComplete",
-                           HttpMethod = "GET",
-                           UpdateTargetId = "idTabela",
-                           InsertionMode = InsertionMode.Replace
-                       })
+                            <a id="A4B" onclick="sort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th>
-                            @Ajax.ActionLink("A4CBOboje", "AjaxTabela", new { sortOrder = ViewBag.A4CBOSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
-                       {
-                           OnBegin = "onBegin",
-                           OnComplete = "onComplete",
-                           HttpMethod = "GET",
-                           UpdateTargetId = "idTabela",
-                           InsertionMode = InsertionMode.Replace
-                       })
+                            <a id="A4CBO" onclick="sort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th>
-                            @Ajax.ActionLink("A4BOboje", "AjaxTabela", new { sortOrder = ViewBag.A4BOSortParm, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
-                       {
-                           OnBegin = "onBegin",
-                           OnComplete = "onComplete",
-                           HttpMethod = "GET",
-                           UpdateTargetId = "idTabela",
-                           InsertionMode = InsertionMode.Replace
-                       })
+                            <a id="A4BO" onclick="sort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th></th>
                     </tr>
@@ -114,7 +54,7 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
+                        <tr class="link" onclick="document.location = 'links.html';">
                             <td>
                                 @Html.DisplayFor(modelItem => item.naziv)
                             </td>
@@ -135,15 +75,24 @@
                             </td>
 
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.idtiskarne }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.idtiskarne }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.idtiskarne })
+                                <a class="btn icon-btn btn-default btn-edit" href="#">
+                                    <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-default "></span>
+                                    Uredi
+                                </a>
+                                <a class="btn icon-btn btn-default btn-details" href="#">
+                                    <span class="glyphicon btn-glyphicon glyphicon-list img-circle text-default "></span>
+                                    Podrobnosti
+                                </a>
+                                <a class="btn icon-btn btn-default btn-delete" href="#">
+                                    <span class="glyphicon btn-glyphicon glyphicon-remove img-circle text-default "></span>
+                                    Zbriši
+                                </a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            Stran @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
 
             @Html.PagedListPager(Model, page => Url.Action("AjaxTabela", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
 
@@ -164,10 +113,59 @@
     </div>
 <script>
                             function onBegin() {
-                                $("#loading").addClass("loading");
-                            }
-
+                                $("#loading").addClass("loading"); }
                             function onComplete() {
                                 $("#loading").removeClass("loading");
                             }
 </script>
+<script>
+$('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function() {
+	$(this).removeClass('fa-sort');
+	this.asc = !this.asc;
+	if (this.asc) {
+	    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
+	} else {
+	    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
+	}
+});
+
+</script>
+
+<script>
+    function sort(elem) {
+        var sortParm;
+        var CurrentFilter = "@ViewBag.CurrentFilter";
+        var PageSize = "@ViewBag.PageSize";
+        var id = $(elem).attr("id");
+        switch (id) {
+            case "Naziv":
+                sortParm = "@ViewBag.nazivSortParm";
+                break;
+            case "A4CB":
+                sortParm =" @ViewBag.A4CBSortParm";
+                break;
+            case "A4B":
+                sortParm = "@ViewBag.A4BSortParm";
+                break;
+            case "A4CBO":
+                sortParm = "@ViewBag.A4CBOSortParm";
+                break;
+            case "A4BO":
+                sortParm = "@ViewBag.A4BOSortParm";
+                break;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/Home/AjaxTabela",
+            data: { sortOrder: sortParm, currentFilter: CurrentFilter, pageSize: PageSize },
+            success: function (response) {
+                $("#idTabela").html(response);
+            },
+            error: function (e) {
+                alert("error occured" + e);
+            }
+        });
+    }
+</script>
+
+
