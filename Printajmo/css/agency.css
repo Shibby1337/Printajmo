@@ -872,3 +872,12 @@ border-radius: 8px;
 padding: 15px 25px;
 font-size: 14px
 }
+
+.odjavaLink {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-decoration: none;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}

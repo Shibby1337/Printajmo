@@ -1,0 +1,80 @@
+﻿@model Printajmo.Models.ChangePasswordViewModel
+@{
+            ViewBag.Title = "Upravljanje računa";
+}
+
+
+<div class="modal fade bs-modal-sm" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content paddingBost">
+            <br>
+
+            <div class="modal-body">
+                <div id="myTabContent2" class="tab-content">
+                    <div class="tab-pane fade active in" id="racun">
+                       @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                       {
+                        @Html.AntiForgeryToken()
+                        <fieldset>
+                            <h4>Sprememba gesla</h4>
+                            <div class="container">
+                                <label class="control-label"></label>
+                            </div>
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                            <div class="control-group">
+                                @*@Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })*@
+                                <label class="control-label">Staro geslo:</label>
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                                </div>
+                                <div class="container">
+                                    <label class="control-label"></label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                @*@Html.LabelFor(m => m.NewPassword, new { @class = "control-label" })*@
+                                <label class="control-label">Novo geslo:</label>
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                                </div>
+                                <div class="container">
+                                    <label class="control-label"></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Potrdi geslo:</label>
+                                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })*@
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                </div>
+                                <div class="container">
+                                    <label class="control-label"></label>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <label class="control-label"></label>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="submit" value="Spremeni" class="btn btn-xl button-login" />
+                                </div>
+                            </div>
+                            <div class="container">
+                                <label class="control-label"></label>
+                            </div>
+                        </fieldset>
+                       }
+                           
+                    </div>
+                </div>
+            </div>
+           @section Scripts {
+           @Scripts.Render("~/bundles/jqueryval")
+        }
+        </div>
+    </div>
+</div>
+
+
