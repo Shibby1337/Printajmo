@@ -742,10 +742,6 @@ ul.social-buttons li a:active {
   opacity: 0;
   display: none;
 }
-::-moz-selection {
-  text-shadow: none;
-  background: #f01313;
-}
 img::selection {
   background: transparent;
 }
@@ -922,37 +918,40 @@ font-size: 14px
 .colors-printajmo.redLight {
  color: #F94545;
 }
+.colors-printajmo-blue {
+ color: #0B9090;
+}
+.colors-printajmo.blueLight {
+ color: #299696;
+}
+.colors-printajmo-green {
+ color: #9BE012;
+}
+.colors-printajmo.blueDark {
+ color: #77B005;
+}
+
+
 .btn-add {
-     background-color: #F07713;
-     border-color: #F07713;
+     background-color: #F01313;
+     border-color: #F01313;
+     color:white;
+     font-weight:bold;
 }
 .btn-add:hover {
-     background-color: #BD5906;
-     border-color: #BD5906;
+     background-color: #BD0606;
+     border-color: #BD0606;
+     color:white;
+     font-weight:bold;
 }
-.btn-edit {
+.btn-edd {
     background-color:#e5e5e5;
     border-color:#e5e5e5;
 }
-.btn-edit:hover {
-    background-color:#F01313;
-    border-color:#F01313;
-}
-.btn-details {
-    background-color:#e5e5e5;
-    border-color:#e5e5e5;
-}
-.btn-details:hover {
-       background-color:#F01313;
-    border-color:#F01313;
-}
-.btn-delete {
-    background-color:#e5e5e5;
-    border-color:#e5e5e5;
-}
-.btn-delete:hover {
-      background-color:#F01313;
-    border-color:#F01313;
+.btn-edd:hover {
+    background-color:#EB2012;
+    border-color:#EB2012;
+    color:white;
 }
 .link:hover {
      background-color:#e5e5e5;
@@ -971,4 +970,7 @@ font-size: 14px
 }
 ::-webkit-input-placeholder {
     color:#969696 !important;
+}
+::selection {
+    
 }

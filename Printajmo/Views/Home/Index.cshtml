@@ -160,7 +160,7 @@
          }))
             {
                 <div class="pull-right">
-                    <input type="text" id="searchString" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
+                    <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
                     <button type="submit" class="btn">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
@@ -731,11 +731,7 @@
                 url: "/Home/AjaxTabela",
                 data: {sortOrder:'', searchString: $('#searchString').val(), currentFilter: "@ViewBag.CurrentFilter", pageSize: "@ViewBag.PageSize" },
                 type: "Get",
-                beforeSend: function () {
-                    $("#idTabela").addClass("loading");
-                },
                 success: function (data) {
-                    $("#idTabela").removeClass("loading");
                     $("#idTabela").html(data);
                 }
             })
