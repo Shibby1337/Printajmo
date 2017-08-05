@@ -15,10 +15,8 @@ namespace Printajmo.Controllers
            if(_db == null)
                 _db = new Models.tiskarneEntities();
         }
-        public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string searchString, string currentFilter, int? page)
+        public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string currentFilter, string searchString, int? page)
         {
-           
-
             ViewBag.nazivSortParm = String.IsNullOrEmpty(sortOrder) ? "naziv_desc" : "";
             ViewBag.A4CBSortParm = sortOrder == "A4CB_desc" ? "A4CB_asc" : "A4CB_desc";
             ViewBag.A4BSortParm = sortOrder == "A4B_desc" ? "A4B_asc" : "A4B_desc";

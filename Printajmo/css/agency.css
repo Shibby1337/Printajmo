@@ -969,3 +969,6 @@ font-size: 14px
     padding-left: 15px;
     padding-right: 15px;
 }
+::-webkit-input-placeholder {
+    color:#969696 !important;
+}
