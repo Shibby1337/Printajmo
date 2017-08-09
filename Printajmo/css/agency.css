@@ -1021,3 +1021,13 @@ font-size: 14px
     position:relative;
     left:-80px;
 }
+.urediRacun:hover {
+    color:crimson;
+    cursor: pointer!important;
+}
+
+.urediRacun {
+   font-size:14px;
+   font-weight:bold;
+   text-transform:uppercase;
+}
