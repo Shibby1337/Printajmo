@@ -1,4 +1,5 @@
 ﻿@model Printajmo.Models.ChangePasswordViewModel
+@using Microsoft.AspNet.Identity
 @{
             ViewBag.Title = "Upravljanje računa";
 }
@@ -16,54 +17,108 @@
                        {
                         @Html.AntiForgeryToken()
                         <fieldset>
+                           
+                            <h5>@Model.Email</h5>
+                           
                             <h4>Sprememba gesla</h4>
                             <div class="container">
                                 <label class="control-label"></label>
                             </div>
                             @Html.ValidationSummary("", new { @class = "text-danger" })
+                            
+                            @{ var uporabnik = User.Identity.GetUserName();
 
-                            <div class="control-group">
-                                @*@Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })*@
-                                <label class="control-label">Staro geslo:</label>
-                                <div class="controls">
-                                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
-                                </div>
-                                <div class="container">
-                                    <label class="control-label"></label>
+                                var currentUserId = User.Identity.GetUserId();
+                                //var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new MyDbContext()));
+                                //var currentUser = manager.FindById(User.Identity.GetUserId());
+                                //currentUser.MyUserInfo.FirstName
+                                //uporabnik.
+                              }
+                            
+                            <label class="control-label urediRacun" id="uporab">Uporabniško ime</label>
+                            <div class="control-group " id="uporab1">
+                                <div class="control-group">
+                                    @*@Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })*@
+                                    <label class="control-label">Novo uporabniško:</label>
+                                    <div class="controls">
+                                       @Html.TextBoxFor(m => m.Uporabnisko, new { @class = "form-control" , placeholder = "" })
+                                    </div>
+                                    <div class="container">
+                                        <label class="control-label"></label>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                @*@Html.LabelFor(m => m.NewPassword, new { @class = "control-label" })*@
-                                <label class="control-label">Novo geslo:</label>
-                                <div class="controls">
-                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                            <br />
+                            <br />
+                            <label class="control-label urediRacun" id="mail">Email</label>
+                            <div class="control-group " id="mail1">
+                                <div class="control-group">
+                                    @*@Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })*@
+                                    <label class="control-label">Novi email:</label>
+                                    <div class="controls">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , placeholder = @uporabnik })
+                                    </div>
+                                    <div class="container">
+                                        <label class="control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <br />
+                            <label class="control-label urediRacun" id="geslo">Geslo</label>
+                            <div class="control-group " id="geslo1">
+                                <div class="control-group">
+                                    @*@Html.LabelFor(m => m.OldPassword, new { @class = "control-label" })*@
+                                    <label class="control-label">Staro geslo:</label>
+                                    <div class="controls">
+                                        @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                                    </div>
+                                    <div class="container">
+                                        <label class="control-label"></label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    @*@Html.LabelFor(m => m.NewPassword, new { @class = "control-label" })*@
+                                    <label class="control-label">Novo geslo:</label>
+                                    <div class="controls">
+                                        @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                                    </div>
+                                    <div class="container">
+                                        <label class="control-label"></label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Potrdi geslo:</label>
+                                    @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })*@
+                                    <div class="controls">
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>    
+
+                                
+                                
+
+                                
+                             
+                                <div class="container">
+                                    <label class="control-label"></label>
+                                </div>
+
+                                <div class="container">
+                                    <label class="control-label"></label>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="submit" value="Spremeni" class="btn btn-xl button-login" />
+                                    </div>
                                 </div>
                                 <div class="container">
                                     <label class="control-label"></label>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">Potrdi geslo:</label>
-                                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })*@
-                                <div class="controls">
-                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                                </div>
-                                <div class="container">
-                                    <label class="control-label"></label>
-                                </div>
-                            </div>
-                            <div class="container">
-                                <label class="control-label"></label>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <input type="submit" value="Spremeni" class="btn btn-xl button-login" />
-                                </div>
-                            </div>
-                            <div class="container">
-                                <label class="control-label"></label>
-                            </div>
                         </fieldset>
                        }
                            
@@ -78,3 +133,29 @@
 </div>
 
 
+<script type="text/javascript">
+    $(window).load(function () {
+        $("#geslo1").slideToggle();
+        $("#mail1").slideToggle();
+        $("#uporab1").slideToggle();
+    })
+     $(document).ready(function () {
+         $("#geslo").click(function () {
+             $("#geslo1").slideToggle("slow");
+         });
+    });
+
+
+    $(document).ready(function () {
+        $("#mail").click(function () {
+            $("#mail1").slideToggle("slow");
+        });
+    });
+
+
+    $(document).ready(function () {
+        $("#uporab").click(function () {
+            $("#uporab1").slideToggle("slow");
+        });
+    });
+</script>

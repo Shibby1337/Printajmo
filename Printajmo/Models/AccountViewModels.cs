@@ -85,6 +85,10 @@ namespace Printajmo.Models
         [Display(Name = "Potrdi geslo")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Tip uporabnika:")]
+        public string SelectRole { get; set; }
     }
 
     public class ResetPasswordViewModel
