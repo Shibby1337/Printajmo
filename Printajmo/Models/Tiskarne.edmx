@@ -4,17 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="tiskarneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="tiskarneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tiskarne">
           <Key>
             <PropertyRef Name="idtiskarne" />
           </Key>
           <Property Name="idtiskarne" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="naziv" Type="varchar" MaxLength="45" />
-          <Property Name="a4cb" Type="decimal" Precision="2" Scale="0" />
-          <Property Name="a4barvno" Type="decimal" Precision="2" Scale="0" />
-          <Property Name="a4cboboje" Type="decimal" Precision="2" Scale="0" />
-          <Property Name="a4barvnooboje" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="a4cb" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="a4barvno" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="a4cboboje" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="a4barvnooboje" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ulica" Type="varchar" MaxLength="45" />
           <Property Name="postnast" Type="int" />
           <Property Name="mesto" Type="varchar" MaxLength="45" />
@@ -27,8 +27,7 @@
         <EntityContainer Name="tiskarneModelStoreContainer">
           <EntitySet Name="tiskarne" EntityType="Self.tiskarne" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="tiskarneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -38,10 +37,10 @@
           </Key>
           <Property Name="idtiskarne" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="a4cb" Type="Decimal" Precision="2" Scale="0" />
-          <Property Name="a4barvno" Type="Decimal" Precision="2" Scale="0" />
-          <Property Name="a4cboboje" Type="Decimal" Precision="2" Scale="0" />
-          <Property Name="a4barvnooboje" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="a4cb" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="a4barvno" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="a4cboboje" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="a4barvnooboje" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="ulica" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="postnast" Type="Int32" />
           <Property Name="mesto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />

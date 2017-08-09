@@ -89,7 +89,68 @@ namespace Printajmo.Controllers
         {
             return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
         }
+        public ActionResult DeleteEntry(int id, string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            _db.tiskarne.Remove(_db.tiskarne.Find(id));
+            _db.SaveChanges();
+            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+        }
+        public ActionResult EditEntry(int id, string sortOrder, string currentFilter, string searchString, int? page, string naziv, string email, string telefonska, string ulica, string mesto, int postnast, decimal a4cb, decimal a4barvno, decimal a4cboboje, decimal a4boboje)
+        {
+            var tiskarna = _db.tiskarne.Find(id);
+            tiskarna.naziv = naziv;
+            tiskarna.email = email;
+            tiskarna.telefonska = telefonska;
+            tiskarna.ulica = ulica;
+            tiskarna.mesto = mesto;
+            tiskarna.postnast = postnast;
+            tiskarna.a4cb = a4cb;
+            tiskarna.a4barvno = a4barvno;
+            tiskarna.a4cboboje = a4cboboje;
+            tiskarna.a4barvnooboje = a4boboje;
+            _db.Entry(tiskarna).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
+            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+        }
 
+        public ActionResult AddEntry(string sortOrder, string currentFilter, string searchString, int? page, string naziv, string email, string telefonska, string ulica, string mesto, int postnast, decimal a4cb, decimal a4barvno, decimal a4cboboje, decimal a4boboje)
+        {
+            var tiskarna = new Printajmo.Models.tiskarne();
+            tiskarna.naziv = naziv;
+            tiskarna.email = email;
+            tiskarna.telefonska = telefonska;
+            tiskarna.ulica = ulica;
+            tiskarna.mesto = mesto;
+            tiskarna.postnast = postnast;
+            tiskarna.a4cb = a4cb;
+            tiskarna.a4barvno = a4barvno;
+            tiskarna.a4cboboje = a4cboboje;
+            tiskarna.a4barvnooboje = a4boboje;
+            _db.tiskarne.Add(tiskarna);
+            _db.SaveChanges();
+            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+        }
+
+        public ActionResult GetTiskarnaDelete(int id)
+        {
+            var model = _db.tiskarne.Find(id);
+            return PartialView("_DeletePartial", model);
+        }
+
+        public ActionResult GetTiskarnaEdit(int id)
+        {
+            var model = _db.tiskarne.Find(id);
+            return PartialView("_EditPartial", model);
+        }
+        public ActionResult GetTiskarnaDetails(int id)
+        {
+            var model = _db.tiskarne.Find(id);
+            return PartialView("_DetailsPartial", model);
+        }
+        public ActionResult AddNewTiskarnaView()
+        {
+            return PartialView("_AddNewPartial");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

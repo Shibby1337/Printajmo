@@ -1,13 +1,11 @@
 ﻿
-    @model PagedList.IPagedList<Printajmo.Models.tiskarne>
-    @using PagedList.Mvc;
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+@model PagedList.IPagedList<Printajmo.Models.tiskarne>
+@using PagedList.Mvc;
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <div class="row">
+<div class="row">
     <div class="pull-left">
-        <a class="btn icon-btn btn-default btn-add" href="#">
-            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle"  style="color:#333"></span>
+        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView","home")'>
+            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
             Dodaj
         </a>
     </div>
@@ -15,82 +13,85 @@
 <br />
 <br />
 <div id="loading"></div>
-    <div class="row">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr style="background-color:#ebebeb">
-                        <th>
-                            @*@Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
-                       {
-                           OnBegin = "onBegin",
-                           OnComplete = "onCompleteNaziv",
-                           HttpMethod = "GET",
-                           UpdateTargetId = "idTabela",
-                           InsertionMode = InsertionMode.Replace
-                       })*@
-                      
-                          <a id="Naziv" name="naziv" onclick="textClickSort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
-                      
-                        </th>
-                        <th>
-                            <a id="naslovTH">Naslov</a>
-                        </th>
-                        <th>
-                            <a id="A4CB" onclick="textClickSort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
-                         </th>
-                        <th>
-                            <a id="A4B" onclick="textClickSort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
-                        </th>
-                        <th>
-                            <a id="A4CBO" onclick="textClickSort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
-                        </th>
-                        <th>
-                            <a id="A4BO" onclick="textClickSort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
-                        </th>
-                        <th></th>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr style="background-color:#ebebeb">
+                    <th>
+                        @*@Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                            {
+                                OnBegin = "onBegin",
+                                OnComplete = "onCompleteNaziv",
+                                HttpMethod = "GET",
+                                UpdateTargetId = "idTabela",
+                                InsertionMode = InsertionMode.Replace
+                            })*@
+
+                        <a id="Naziv" name="naziv" onclick="textClickSort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
+
+                    </th>
+                    <th>
+                        <a id="naslovTH">Naslov</a>
+                    </th>
+                    <th>
+                        <a id="A4CB" onclick="textClickSort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4B" onclick="textClickSort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4CBO" onclick="textClickSort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4BO" onclick="textClickSort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="link details" data-url='@Url.Action("GetTiskarnaDetails","home", new { id =item.idtiskarne} )'>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.naziv)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ulica), @Html.DisplayFor(modelItem => item.mesto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4cb)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4barvno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4cboboje)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4barvnooboje)
+                        </td>
+
+                        <td>
+                            <a class="btn icon-btn btn-default btn-edd editJS" data-url='@Url.Action("GetTiskarnaEdit","home", new { id =item.idtiskarne} )'>
+                                <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-edit img-circle text-default "></span>
+                                Uredi
+                            </a>
+                            <a class="btn icon-btn btn-default btn-edd deleteJS" data-url='@Url.Action("GetTiskarnaDelete","home", new { id =item.idtiskarne} )'>
+                                <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-remove img-circle text-default "></span>
+                                Zbriši
+                            </a>
+
+                        </td>
+
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="link" onclick="document.location = 'links.html';">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.naziv)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ulica), @Html.DisplayFor(modelItem => item.mesto)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.a4cb)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.a4barvno)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.a4cboboje)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.a4barvnooboje)
-                            </td>
 
-                            <td>
-                                <a class="btn icon-btn btn-default btn-edd" href="#">
-                                    <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-edit img-circle text-default "></span>
-                                    Uredi
-                                </a>
-                                <a class="btn icon-btn btn-default btn-edd" href="#">
-                                    <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-remove img-circle text-default "></span>
-                                    Zbriši
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            Stran @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+                }
+            </tbody>
+        </table>
+        Stran @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
 
-            @Html.PagedListPager(Model, page => Url.Action("AjaxTabela", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+        @Html.PagedListPager(Model, page => Url.Action("AjaxTabela", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
 
             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
             {
@@ -104,28 +105,35 @@
                 InsertionMode = InsertionMode.Replace,
                 HttpMethod = "Get",
                 UpdateTargetId = "idTabela"
-            }))  
-        </div>
+            }))
+
     </div>
+
+    <div id="modalContainer">
+    </div>
+
+</div>
+
 <script>
-                            function onBegin() {
-                                $("#loading").addClass("loading"); }
-                            function onComplete() {
-                                $("#loading").removeClass("loading");
-                            }
+    function onBegin() {
+        $("#loading").addClass("loading");
+    }
+    function onComplete() {
+        $("#loading").removeClass("loading");
+    }
 </script>
 <script>
     $('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function () {
-    //$(this).removeClass('fa-sort');
-    //    alert(!this.asc);
-	//this.asc = !this.asc;
-	//if (this.asc) {
-	//    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
-	//} else {
-	//    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
-	//}
-	var id = $(this).prev().attr("id");
-	sort(id);
+        //$(this).removeClass('fa-sort');
+        //    alert(!this.asc);
+        //this.asc = !this.asc;
+        //if (this.asc) {
+        //    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
+        //} else {
+        //    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
+        //}
+        var id = $(this).prev().attr("id");
+        sort(id);
     });
 
     function textClickSort(elem) {
@@ -209,5 +217,63 @@
         }
     }
 </script>
+<script>
+    $('.deleteJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $deleteDiv = $('#modalContainer'),
+            url = $(this).data('url');
 
+        $.get(url, function (data) {
+            $deleteDiv.empty();
+            $deleteDiv.append(data);
+            $('#deleteModal').modal();
+        });
 
+    });
+</script>
+
+<script>
+    $('.editJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $editDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $editDiv.empty();
+            $editDiv.append(data);
+            $('#editModal').modal();
+        });
+
+    });
+</script>
+
+<script>
+    $('.addJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $addDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $addDiv.empty();
+            $addDiv.append(data);
+            $('#addNewModal').modal();
+        });
+    });
+</script>
+
+<script>
+    $('.details').on('click', function () {
+        var $detailsDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $detailsDiv.empty();
+            $detailsDiv.append(data);
+            $('#detailsModal').modal();
+        });
+
+    });
+</script>

@@ -1,19 +1,14 @@
 ﻿@model PagedList.IPagedList<Printajmo.Models.tiskarne>
 @using PagedList.Mvc;
 @using Microsoft.AspNet.Identity
-
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "Home Page";
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,16 +32,15 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
     <![endif]-->
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script>
-                            function onBegin() {
-                                $("#loading").addClass("loading"); }
-                            function onComplete() {
-                                $("#loading").removeClass("loading");
-                            }
+        function onBegin() {
+            $("#loading").addClass("loading");
+        }
+        function onComplete() {
+            $("#loading").removeClass("loading");
+        }
     </script>
 </head>
 <body id="page-top" class="index">
@@ -68,6 +62,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#tiskarne">tiskarne</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#portfolio">Portfolio</a>
@@ -92,37 +89,39 @@
                             if (Request.IsAuthenticated)
                             {
                                 <li>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
-                                {
-                                    @Html.AntiForgeryToken()
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
+                                    {
+                                        @Html.AntiForgeryToken()
 
-                                    @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-                                    <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
+                                        @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                                        <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
 
-                               }</li>
+                                    }
+                                </li>
                             }
                             else
                             {
 
                             }
-                                @*<a href = "javascript:document.getElementById('logoutForm').submit()"> Odjava </a>*@
-                                 @*<a href="/Account/LogOff?id=logoutForm">Odjava</a>*@
+                            @*<a href = "javascript:document.getElementById('logoutForm').submit()"> Odjava </a>*@
+                            @*<a href="/Account/LogOff?id=logoutForm">Odjava</a>*@
                             <li>
                                 <a href="#racun" data-toggle="modal" data-target="#myModal2">Racun</a>
                             </li>
-                                @*@Html.Partial("_LoginPartial");*@
+                            @*@Html.Partial("_LoginPartial");*@
 
 
 
-                                }
-                                else {
-                             <li>
-                              <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
                             </li>
-    
+
 
                         }
-                        }
+                    }
 
 
 
@@ -150,22 +149,23 @@
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-            @using (Ajax.BeginForm("AjaxTabela", "Home",
-         new AjaxOptions {
-             OnBegin = "onBegin",
-             OnComplete = "onComplete",
-             HttpMethod = "GET",
-             InsertionMode = InsertionMode.Replace,
-             UpdateTargetId = "idTabela"
-         }))
-            {
-                <div class="pull-right">
-                    <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
-                    <button type="submit" class="btn">
+            @*@using (Ajax.BeginForm("AjaxTabela", "Home",
+                new AjaxOptions
+                {
+                    OnBegin = "onBegin",
+                    OnComplete = "onComplete",
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "idTabela"
+                }))
+                   {*@
+            <div class="pull-right">
+                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
+                @*<button type="submit" class="btn">
                         <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </div>
-            }
+                    </button>*@
+            </div>
+            @*}*@
             <div id="idTabela" class="row">
                 @Html.Partial("_Tabela", Model)
             </div>
@@ -493,10 +493,10 @@
             </div>
         </div>
     </section>
-   
+
     <!-- Prijava Section -->
     <section id="prijava">
-       @Html.Partial("_LoginRegPartial", new Printajmo.Models.LoginViewModel())
+        @Html.Partial("_LoginRegPartial", new Printajmo.Models.LoginViewModel())
     </section>
     <section id="racun">
         @Html.Partial("_UrediRacun", new Printajmo.Models.ChangePasswordViewModel());
@@ -709,27 +709,83 @@
             </div>
         </div>
     </div>
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Modal -->
+    <div id="tiskarneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <!-- Modal content-->
+            <div class="modal-content oversize">
+                <div class="modal-header bg-modal">
+                    <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Zelmjevid
+                    </h4>
+                </div>
+               <div id="tiskarneMap"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#tiskarneModal").on("shown.bs.modal", function () {
+         initMap();
+        });
+
+
+        var markers = [
+       ['London Eye, London', 51.503454, -0.119562],
+       ['Palace of Westminster, London', 51.499633, -0.124755]
+        ];
+
+        var map;
+          function initMap() {
+
+              map = new google.maps.Map(document.getElementById('tiskarneMap'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+        }
+
+         @*var _lat = '@Model.latitude';
+         _lat = _lat.replace(/,/g, '.');
+         var _lng = '@Model.longitude';
+         _lng = _lng.replace(/,/g, '.');*@
+
+         //var myMarker = { lat: parseFloat(_lat), lng: parseFloat(_lng) };
+
+         //var map = new google.maps.Map(document.getElementById('tiskarneMap'), {
+         //    center: myMarker,
+         //    zoom: 12
+         //});
+
+         //var marker = new google.maps.Marker({
+         //    position: myMarker,
+         //    map: map,
+         //    title: 'title'
+         //});
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyrmm-O3W-VyisTzxPS9AuCjFmGOSZpM8&callback=initMap" type="text/javascript"></script>
+
+
+
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Plugin JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>    <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
     <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+    @*<script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/contact_me.js"></script>*@
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </body>
 </html>
 <script type="text/javascript">
-    $(document).ready(function (){
-        $("#searchString").on('keyup', function (event){
+    $(document).ready(function () {
+        $("#searchString").on('keyup', function (event) {
             $.ajax({
                 async: false,
                 url: "/Home/AjaxTabela",
-                data: {sortOrder:'', searchString: $('#searchString').val(), currentFilter: "@ViewBag.CurrentFilter", pageSize: "@ViewBag.PageSize" },
+                data: { sortOrder: '', searchString: $('#searchString').val(), currentFilter: "@ViewBag.CurrentFilter", pageSize: "@ViewBag.PageSize" },
                 type: "Get",
                 success: function (data) {
                     $("#idTabela").html(data);

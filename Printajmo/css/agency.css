@@ -971,6 +971,53 @@ font-size: 14px
 ::-webkit-input-placeholder {
     color:#969696 !important;
 }
-::selection {
-    
+.paddingMB {
+    padding-top:30px;
+    padding-left:40px!important;
+    padding-right:30px;
+}
+.textMontserrant h5, p {
+    font-family:Montserrat;
+}
+.textMontserrant p span {
+    position:relative;
+    left:-12px;
+}
+.textMontserrant h4 span {
+    position:relative;
+    left:-8px;
+}
+.textMontserrant h4  {
+    margin-top:0px;
+    position:relative;
+    left:8px;
+}
+.textMontserrant p  {
+    position:relative;
+    left:12px;
+}
+.bg-modal {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #e8e8e8;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.inline-block{
+    display:inline-block;
+}
+.detailMap {
+    height:200px;
+}
+#tiskarneMap {
+    height:550px;
+}
+.oversize {
+    width:120%!important;
+    position:relative;
+    left:-80px;
 }
