@@ -28,18 +28,17 @@
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <!-- Multiple Checkboxes(inline) -->
-            <div class="control-group check-login">
-                <label class="control-label" for="rememberme"></label>
+           
+
+            <!-- Button -->
+            <div class="control-group">
                 <div class="controls">
-                    @*<label class="checkbox inline" for="rememberme-0">
-                           <input type = "checkbox" name="rememberme" id="rememberme-0" value="Remember me">
-                            Zapomni si me*
-                        </label>*@
-                    @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe)
+                    <br />
+                    <a href="#pozabljeno" data-toggle="tab">Pozabljeno geslo?</a>
                 </div>
             </div>
+
+
             <!-- Button -->
             <div class="control-group">
                 <label class="control-label" for="signin"></label>
@@ -50,8 +49,12 @@
             </div>
            
         </fieldset>
+        @*<section id="#pozabljeno">
+            @Html.Partial("_ForgotPassword", new Printajmo.Models.ForgotPasswordViewModel())
+        </section>*@
    }
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+

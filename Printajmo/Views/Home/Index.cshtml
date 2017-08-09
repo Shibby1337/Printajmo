@@ -99,7 +99,7 @@
                                     @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                                     <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
 
-                               }</li>
+                                }</li>
                             }
                             else
                             {
@@ -108,8 +108,10 @@
                                 @*<a href = "javascript:document.getElementById('logoutForm').submit()"> Odjava </a>*@
                                  @*<a href="/Account/LogOff?id=logoutForm">Odjava</a>*@
                             <li>
-                                <a href="#racun" data-toggle="modal" data-target="#myModal2">Racun</a>
-                            </li>
+                                @{ var uporabnik = User.Identity.GetUserName();}
+                                <a href="#racun" data-toggle="modal" data-target="#myModal2">@uporabnik</a>
+
+</li>
                                 @*@Html.Partial("_LoginPartial");*@
 
 

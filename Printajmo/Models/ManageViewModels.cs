@@ -41,12 +41,22 @@ namespace Printajmo.Models
 
     public class ChangePasswordViewModel
     {
-        [Required]
+
+       
+        [Display(Name = "Uporabniško:")]
+        [EmailAddress]
+        public string Uporabnisko { get; set; }
+
+       
+        [Display(Name = "Email:")]
+        [EmailAddress]
+        public string Email { get; set; }
+
         [DataType(DataType.Password)]
         [Display(Name = "Trenutno geslo")]
         public string OldPassword { get; set; }
 
-        [Required]
+        
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Novo geslo")]

@@ -39,7 +39,6 @@
                 <div class="controls">
                     @*<input id="password" name="password" class="form-control" type="password" class="input-large" required="">*@
                      @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    <em>1-8 Characters</em>
                 </div>
             </div>
 
@@ -55,17 +54,27 @@
 
             <!-- Multiple Radios(inline) -->
             <br>
-            @*<div class="control-group">
-                <label class="control-label" for="humancheck">Humanity Check:</label>
-                <div class="controls  check-login">
-                    <label class="radio inline" for="humancheck-0">
-                        <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot
+            <div class="control-group">
+                <label class="control-label" for="humancheck">Tip uporabnika:</label>
+                <div class="controls">
+                    @*<label class="radio inline" for="humancheck-0">
+                        <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">Uporabnik
                     </label>
                     <label class="radio inline" for="humancheck-1">
-                        <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human
-                    </label>
+                        <input type="radio" name="humancheck" id="humancheck-1" value="human">Tiskarna
+                    </label>*@
+
+                    <br />
+                    @Html.RadioButtonFor(m => m.SelectRole, "tiskarna")
+                    <label>Tiskarna</label>
+                    <br />
+                   
+                   
+                    @Html.RadioButtonFor(m => m.SelectRole, "user")
+                    <label> Uporabnik</label>
+                    
                 </div>
-            </div>*@
+            </div>
 
             <!-- Button -->
             <div class="control-group">
