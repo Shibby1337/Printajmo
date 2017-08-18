@@ -280,6 +280,7 @@
       <DependentUpon>Tiskarne.edmx</DependentUpon>
       <LastGenOutput>Tiskarne.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Tiskarne.edmx.sql" />
     <Content Include="Models\Tiskarne.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Tiskarne.edmx</DependentUpon>
