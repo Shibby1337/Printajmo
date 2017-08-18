@@ -2,14 +2,19 @@
 @model PagedList.IPagedList<Printajmo.Models.tiskarne>
 @using PagedList.Mvc;
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 <div class="row">
     <div class="pull-left">
-        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView","home")'>
+@if (this.User.IsInRole("Admin"))
+{
+        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
             <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
             Dodaj
         </a>
+}
     </div>
 </div>
+
 <br />
 <br />
 <div id="loading"></div>
@@ -72,6 +77,8 @@
                             @Html.DisplayFor(modelItem => item.a4barvnooboje)
                         </td>
 
+                        @if (this.User.IsInRole("Admin"))
+                        {
                         <td>
                             <a class="btn icon-btn btn-default btn-edd editJS" data-url='@Url.Action("GetTiskarnaEdit","home", new { id =item.idtiskarne} )'>
                                 <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-edit img-circle text-default "></span>
@@ -83,7 +90,7 @@
                             </a>
 
                         </td>
-
+                        }
                     </tr>
 
                 }

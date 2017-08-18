@@ -930,7 +930,17 @@ font-size: 14px
 .colors-printajmo.blueDark {
  color: #77B005;
 }
-
+.btn {
+    border:0px;
+}
+.btn:hover {
+    border-color:#BD0606!important;
+    background-color:#BD0606!important;
+}
+.btn::selection {
+    border-color:#BD0606!important;
+    background-color:#BD0606!important;
+}
 
 .btn-add {
      background-color: #F01313;
@@ -1030,4 +1040,24 @@ font-size: 14px
    font-size:14px;
    font-weight:bold;
    text-transform:uppercase;
+}
+.gm-style-iw {
+top:0px!important;
+left:0px!important;
+}
+
+.ico-map {
+    width:40px;
+    padding-top: 5px;
+}
+.ico-map:hover {
+    cursor:pointer;
+    filter: brightness(50%);
+}
+.accountView {
+    width:10px;
+}
+.custom-nav {
+    /*padding-right:100px!important;*/
+    width:80%!important;
 }

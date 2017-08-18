@@ -52,82 +52,59 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
+                <img src="~/img/map-ico.png" class="ico-map" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
                 <a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse custom-nav" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#tiskarne">tiskarne</a>
+                        <a class="page-scroll nav-menu" href="#tiskarne">tiskarne</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+                        <a class="page-scroll nav-menu" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                        <a class="page-scroll nav-menu" href="#portfolio">Portfolio</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll nav-menu" href="#about">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#team">Team</a>
+                        <a class="page-scroll nav-menu" href="#team">Team</a>
                     </li>
 
                     <li>
-                        <a class="page-scroll" href="#contact">Kontakt</a>
+                        <a class="page-scroll nav-menu" href="#contact">Kontakt</a>
                     </li>
-
-                    @{
-
-                        var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-
-                        if (val1 == true)
-                        {
-                            if (Request.IsAuthenticated)
-                            {
-                                <li>
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-
-                                        @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-                                        <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
-
-                                    }
-                                </li>
-                            }
-                            else
-                            {
-
-                            }
-                            @*<a href = "javascript:document.getElementById('logoutForm').submit()"> Odjava </a>*@
-                            @*<a href="/Account/LogOff?id=logoutForm">Odjava</a>*@
-                            <li>
-                                <a href="#racun" data-toggle="modal" data-target="#myModal2">Racun</a>
-                            </li>
-                            @*@Html.Partial("_LoginPartial");*@
-
-
-
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
-                            </li>
-
-
-                        }
-                    }
-
-
-
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
+            <div class="accountView navbar-header page-scroll">
+                @{
+                    var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+
+                    if (val1 == true)
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
+
+                            }
+                        }
+                        <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                    }
+                    else
+                    {
+                        <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
+                    }
+                }
+            </div>
         </div>
         <!-- /.container-fluid -->
     </nav>
@@ -720,51 +697,110 @@
                         Zelmjevid
                     </h4>
                 </div>
-               <div id="tiskarneMap"></div>
+                <div id="tiskarneMap"></div>
             </div>
         </div>
     </div>
+
     <script>
         $("#tiskarneModal").on("shown.bs.modal", function () {
-         initMap();
+            initMapTiskarne();
         });
 
-
-        var markers = [
-       ['London Eye, London', 51.503454, -0.119562],
-       ['Palace of Westminster, London', 51.499633, -0.124755]
-        ];
+        //function initMap() { }
 
         var map;
-          function initMap() {
-
-              map = new google.maps.Map(document.getElementById('tiskarneMap'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 8
+        function initMapTiskarne() {
+            map = new google.maps.Map(document.getElementById('tiskarneMap'), {
+                zoom: 2,
+                center: new google.maps.LatLng(46.151234, 44.995339),
+                mapTypeId: 'roadmap'
             });
+
+            var json;
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: "/Home/getTiskarneJson",
+                success: function (data) {
+                    //alert("Cyka   " + JSON.stringify(json));
+                    json = jQuery.parseJSON(data);
+                }
+            })
+            var bounds = new google.maps.LatLngBounds();
+            var markers = [];
+            for (var i = 0; i < json.tiskarne.length; i++) {
+                var _lat = json.tiskarne[i].lat;
+                _lat = _lat.replace(/,/g, '.');
+                var _lng = json.tiskarne[i].lng
+                _lng = _lng.replace(/,/g, '.');
+
+                var latLng = new google.maps.LatLng(parseFloat(_lat), parseFloat(_lng));
+                var contentString = '<div class=\"container\" style=\"width:400px;padding-left:0px;"\">' +
+                    '<div class="row">' +
+                    '<div class="col-sm-5"><img src=\"https://img-new.cgtrader.com/items/56088/building_328_3d_model_242c2761-4a85-4276-bb8a-978173e2d16e.jpg\" style=\"width:150px;\"><img></div>' +
+                    ' <div class="col-sm-7" style="padding-top:20px;"><strong>' + json.tiskarne[i].title +
+                    '</strong> </div>' +
+                    '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 400
+                });
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    zIndex: 9999999,
+                    //label: {
+                    //     text: json.tiskarne[i].title,
+                    //     labelClass: "labels", // the CSS class for the label
+                    //     fontFamily: "Arial",
+                    //     fontWeight: "Bold"
+
+                    //},
+                    title: json.tiskarne[i].title,
+                    icon: {
+                        url: 'https://www.google.si/maps/vt/icon/name=assets/icons/poi/quantum/container_background-2-medium.png,assets/icons/poi/quantum/container-2-medium.png,assets/icons/poi/quantum/dot-2-medium.png&highlight=ffffff,db4437,ffffff&color=ff000000?scale=1',
+                        scale: 10,
+                        labelOrigin: new google.maps.Point(95, 12)
+                    }
+
+                });
+                //marker.addListener('mouseover', function () {
+                //    infowindow.open(map, this);
+                //});
+
+                //// assuming you also want to hide the infowindow when user mouses-out
+                //marker.addListener('mouseout', function () {
+                //    infowindow.close();
+                //});
+
+                marker.addListener('click', function () {
+                    infowindow.open(map, this);
+                });
+
+
+                bounds.extend(marker.position);
+                markers.push(marker);
+            }
+            var options = {
+                imagePath: 'http://pngimg.com/uploads/ak47/ak47_PNG15466.png'
+            };
+
+            var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
+            map.fitBounds(bounds);
+
+
+
+            //var listener = google.maps.event.addListener(map, "idle", function () {
+            //    map.setZoom(9);
+            //    google.maps.event.removeListener(listener);
+            //});
+
         }
-
-         @*var _lat = '@Model.latitude';
-         _lat = _lat.replace(/,/g, '.');
-         var _lng = '@Model.longitude';
-         _lng = _lng.replace(/,/g, '.');*@
-
-         //var myMarker = { lat: parseFloat(_lat), lng: parseFloat(_lng) };
-
-         //var map = new google.maps.Map(document.getElementById('tiskarneMap'), {
-         //    center: myMarker,
-         //    zoom: 12
-         //});
-
-         //var marker = new google.maps.Marker({
-         //    position: myMarker,
-         //    map: map,
-         //    title: 'title'
-         //});
 
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyrmm-O3W-VyisTzxPS9AuCjFmGOSZpM8&callback=initMap" type="text/javascript"></script>
-
 
 
     <!-- Bootstrap Core JavaScript -->
@@ -777,8 +813,17 @@
     <script src="js/agency.min.js"></script>
     @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+
 </body>
 </html>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#searchString").on('keyup', function (event) {
