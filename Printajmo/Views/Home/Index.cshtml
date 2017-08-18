@@ -44,6 +44,7 @@
     </script>
 </head>
 <body id="page-top" class="index">
+  
     <!-- Navigation -->
     <nav id="mainNav" class="navbar-custom navbar navbar-default  navbar-fixed-top">
         <div class="container ">
@@ -52,8 +53,9 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <img src="~/img/map-ico.png" class="ico-map" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
-                <a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>
+                <img src="~/img/logos/Logo_with_text2.png" class="logo"/>
+              
+                @*<a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>*@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse custom-nav" id="bs-example-navbar-collapse-1">
@@ -63,9 +65,6 @@
                     </li>
                     <li>
                         <a class="page-scroll nav-menu" href="#tiskarne">tiskarne</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll nav-menu" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
                     </li>
                     <li>
                         <a class="page-scroll nav-menu" href="#portfolio">Portfolio</a>
@@ -81,29 +80,30 @@
                         <a class="page-scroll nav-menu" href="#contact">Kontakt</a>
                     </li>
                 </ul>
-            </div>
-            <div class="accountView navbar-header page-scroll">
-                @{
-                    var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                <!--login/register-->
+                <div class="accountView">
+                    @{
+                        var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
 
-                    if (val1 == true)
-                    {
-                        if (Request.IsAuthenticated)
+                        if (val1 == true)
                         {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-left" }))
+                            if (Request.IsAuthenticated)
                             {
-                                @Html.AntiForgeryToken()
-                                <a class="page-scroll odjavaLink" href="javascript:document.getElementById('logoutForm').submit()">Odjava</a>
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
 
+                                }
                             }
+                            <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
                         }
-                        <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                        else
+                        {
+                            <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
+                        }
                     }
-                    else
-                    {
-                        <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
-                    }
-                }
+                </div>
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -126,7 +126,11 @@
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-            @*@using (Ajax.BeginForm("AjaxTabela", "Home",
+<div style="width:170px;">
+    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal"><h4 class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</h4>
+</div>
+  
+    @*@using (Ajax.BeginForm("AjaxTabela", "Home",
                 new AjaxOptions
                 {
                     OnBegin = "onBegin",

@@ -254,6 +254,10 @@
     <Content Include="img\logos\creative-market.jpg" />
     <Content Include="img\logos\designmodo.jpg" />
     <Content Include="img\logos\envato.jpg" />
+    <Content Include="img\logos\Logo_only_android.png" />
+    <Content Include="img\logos\Logo_only_web_site_icon.png" />
+    <Content Include="img\logos\Logo_with_text2.png" />
+    <Content Include="img\logos\Logo_with_text3.png" />
     <Content Include="img\logos\themeforest.jpg" />
     <Content Include="img\map-ico.png" />
     <Content Include="img\map-image.png" />
