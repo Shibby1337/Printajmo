@@ -21,7 +21,7 @@ namespace Printajmo.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Shibby", throwIfV1Schema: false)
         {
         }
 

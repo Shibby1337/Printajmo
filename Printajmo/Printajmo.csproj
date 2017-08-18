@@ -255,6 +255,7 @@
     <Content Include="img\logos\designmodo.jpg" />
     <Content Include="img\logos\envato.jpg" />
     <Content Include="img\logos\themeforest.jpg" />
+    <Content Include="img\map-ico.png" />
     <Content Include="img\map-image.png" />
     <Content Include="img\portfolio\dreams-preview.png" />
     <Content Include="img\portfolio\dreams.png" />
@@ -280,6 +281,7 @@
       <DependentUpon>Tiskarne.edmx</DependentUpon>
       <LastGenOutput>Tiskarne.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Tiskarne.edmx.sql" />
     <Content Include="Models\Tiskarne.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Tiskarne.edmx</DependentUpon>
@@ -330,14 +332,18 @@
     <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="vendor\jquery\jquery.js" />
     <Content Include="vendor\jquery\jquery.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

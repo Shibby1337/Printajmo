@@ -151,6 +151,14 @@ namespace Printajmo.Controllers
         {
             return PartialView("_AddNewPartial");
         }
+        public JsonResult getTiskarneJson() {
+            String str= "{\"tiskarne\": [";
+            foreach (var item in _db.tiskarne) {
+                str += "{\"lat\":\"" + item.latitude + "\",\"lng\":\"" + item.longitude+"\",\"id\":\""+item.idtiskarne+"\",\"title\":\""+item.naziv+"\"},";
+            }
+            str = str.TrimEnd(',') + "]}";
+            return Json(str, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

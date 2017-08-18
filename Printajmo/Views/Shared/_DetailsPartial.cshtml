@@ -70,7 +70,7 @@
      $("#detailsModal").on("shown.bs.modal", function () {
          initMap();
      });
-     
+
      function initMap() {
          var _lat = '@Model.latitude';
          _lat = _lat.replace(/,/g, '.');
@@ -86,8 +86,7 @@
 
          var marker = new google.maps.Marker({
              position: myMarker,
-             map: map,
-             title: 'title'
+             map: map
          });
      }
     </script>
