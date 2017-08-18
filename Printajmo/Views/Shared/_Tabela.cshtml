@@ -12,6 +12,24 @@
             Dodaj
         </a>
 }
+else
+{
+    <div class="row zemljevid-div" style="margin-bottom: 0px; margin-right:20px">
+        <img id="icon-map" src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+        <div class="zemljevid-text-div">
+            <a id="text-zemljevid" class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+        </div>
+    </div>
+}
+@if (this.User.IsInRole("Tiskarna"))
+{
+            <div class="row zemljevid-div" style="margin-bottom: 0px;">
+                <img id="icon-print" src="~/img/print-icon.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+                <div class="zemljevid-text-div">
+                    <a id="text-moje" class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Moje Tiskarne</a>
+                </div>
+            </div>
+ }
     </div>
 </div>
 
@@ -282,5 +300,13 @@
             $('#detailsModal').modal();
         });
 
+    });
+</script>
+<script>
+    $("#text-zemljevid").hover(function () {
+        $("#icon-map").toggleClass("ico-hover");
+    });
+    $("#text-moje").hover(function () {
+        $("#icon-print").toggleClass("ico-hover");
     });
 </script>

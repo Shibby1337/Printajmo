@@ -122,14 +122,18 @@
     <section id="tiskarne">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center" style="padding-bottom:35px">
+                <div class="col-lg-12 text-center">
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-<div style="width:170px;">
-    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal"><h4 class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</h4>
+            @if (this.User.IsInRole("Admin")) {
+<div class="row zemljevid-div">
+    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+    <div class="zemljevid-text-div">
+        <a class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+    </div>   
 </div>
-  
+            }
     @*@using (Ajax.BeginForm("AjaxTabela", "Home",
                 new AjaxOptions
                 {
@@ -141,7 +145,7 @@
                 }))
                    {*@
             <div class="pull-right">
-                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
+                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control iskanje"  placeholder="Iskanje" />
                 @*<button type="submit" class="btn">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>*@
