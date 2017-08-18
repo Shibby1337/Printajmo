@@ -970,14 +970,7 @@ font-size: 14px
 .sort:hover {
     color: #F01313!important;
 }
-.odjavaLink {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    text-decoration: none;
-    float: left;
-    padding-left: 15px;
-    padding-right: 15px;
-}
+
 ::-webkit-input-placeholder {
     color:#969696 !important;
 }
@@ -1046,18 +1039,60 @@ top:0px!important;
 left:0px!important;
 }
 
+
+.logo {
+    float:left;
+    padding-right:20px;
+    height:40px;
+    padding-left:20px;
+    margin-top:8px;
+}
+
+.custom-nav {
+    /*padding-right:100px!important;*/
+    width:80%!important;
+}
+
+.accountView {
+    display: table;
+    width: auto;
+    float:right;
+    position:relative;
+    right:-800px;
+    top:14px;
+}
+.accountView a {
+    font-size:16px;
+    color:#FFFFFF;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;    
+}
+.odjavaLink {
+    margin-left:15px;
+    text-decoration: none;
+}
+.prijava {
+}
+.account-name {
+    text-decoration: none;
+}
 .ico-map {
     width:40px;
-    padding-top: 5px;
 }
 .ico-map:hover {
     cursor:pointer;
     filter: brightness(50%);
 }
-.accountView {
-    width:10px;
+.zemljevid-text {
+   cursor:pointer;
+   margin-top: 15px;
+   margin-left: 55px;
+   padding-top:10px;
 }
-.custom-nav {
-    /*padding-right:100px!important;*/
-    width:80%!important;
+.zemljevid-text:hover {
+   color:#f01313;
+   width:100px!important;
+}
+#idTabela {
+   margin-left:15px;
+    margin-right:15px;
 }
