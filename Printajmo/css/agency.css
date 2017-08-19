@@ -912,7 +912,7 @@ font-size: 14px
  color: #C83789;
 }
 .colors-printajmo-red {
- color: #F01313;
+ color: #F01313!important;
 }
 .colors-printajmo-redDark {
  color: #BD0606;
@@ -1050,30 +1050,108 @@ left:0px!important;
     margin-top:8px;
 }
 
-.custom-nav {
-    /*padding-right:100px!important;*/
+.accountView {
+    display:inline-block;
+    width: auto;
+    float:right!important;
+    margin-top: 15px;
+}
+@media (min-width: 991px) {
+   .custom-nav {
     width:80%!important;
 }
 
-.accountView {
-    display: table;
-    width: auto;
-    float:right;
-    position:relative;
-    right:-800px;
-    top:14px;
 }
+@media(min-width:768px) {
+    .account-li {
+        display:none!important;
+    }
+}
+
+
+@media (min-width:768px) and (max-width: 992px){
+  .navbar-right {
+    margin-right:0px;
+}
+    .custom-nav {
+    font-size: small;
+    width:100%!important;
+    }
+    .accountView a {
+    font-size: 14px!important;
+}
+    .logo {
+    padding-right:0px;
+    padding-left:0px;
+}
+}
+@media (max-width: 767px) {
+    #accountViewMain {
+    display:none;
+    }
+    .accountView {
+    position: relative;
+    right: 15px;
+    }
+     .account-li {
+        display:table!important;
+        width:100%;
+         border-bottom: 1px solid #262626;
+    }
+}
+
+
 .accountView a {
     font-size:16px;
     color:#FFFFFF;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;    
 }
+.accountView a:hover {
+    color:#f01313;
+}
 .odjavaLink {
     margin-left:15px;
     text-decoration: none;
+    text-transform:uppercase;
+}
+.tooltiptext {
+    visibility:hidden;
+    width: 120px;
+    background-color: #f01313;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 10px;
+}
+
+
+@media (min-width: 1422px) {
+    .odjavaLink:hover+ .tooltiptext {
+    visibility: visible;
+}
+}
+
+.loginIco {
+    color:#FFFFFF;
+    padding-right:5px;
+}
+.loginIco:hover {
+    color:#f01313;
+    cursor:pointer;
+}
+.loginIco:hover +a {
+     color:#f01313;
 }
 .prijava {
+     text-decoration: none;
 }
+
 .account-name {
     text-decoration: none;
 }
@@ -1098,7 +1176,7 @@ left:0px!important;
     display:inline-block;
 }
 .zemljevid-text-div {
-    margin-left: 55px;
+    padding-left: 55px;
     margin-top: 8px;
 }
 .zemljevid-text {
