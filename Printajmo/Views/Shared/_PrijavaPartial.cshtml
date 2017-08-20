@@ -1,26 +1,14 @@
 ﻿@model Printajmo.Models.LoginViewModel
-@Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-@Scripts.Render("~/Scripts/jquery-1.7.1.js")
-@Scripts.Render("~/Scripts/jquery.1.7.2.min.js")
 
-@section Script {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-   @using (Ajax.BeginForm("Login", "Account",
-                      new AjaxOptions
-                      {
-                          HttpMethod = "POST",
-                          InsertionMode = InsertionMode.Replace,
-                          UpdateTargetId = "signin"
-                      }))
+<!--PRIJAVA -->
+<div class="tab-pane fade active in" id="signin">
+   @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
    {
     @Html.AntiForgeryToken()
         <fieldset>
             <!-- Sign In Form -->
             <!-- Text input-->
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            
             <div class="control-group">
                 @*<label class="control-label" for="userid">Email:</label>*@
                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })
@@ -55,8 +43,8 @@
             <div class="control-group">
                 <label class="control-label" for="signin"></label>
                 <div class="controls">
-                    <button type="submit" id="signin" name="signin" class="btn btn-xl button-login">Prijavi</button>
-                    @*<input type="submit"id="signin" name="signin"   value="Prijavi" class="btn btn-xl button-login" />*@
+                    @*<button type="submit" id="signin" name="signin" class="btn btn-xl button-login">Prijavi</button>*@
+                    <input type="submit" value="Prijavi" class="btn btn-xl button-login" />
                 </div>
             </div>
            
@@ -65,6 +53,7 @@
             @Html.Partial("_ForgotPassword", new Printajmo.Models.ForgotPasswordViewModel())
         </section>*@
    }
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

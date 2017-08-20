@@ -72,7 +72,7 @@ namespace Printajmo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("_PrijavaPartial", model);
+                return View(model);
             }
 
             var user = await UserManager.FindByEmailAsync(model.Email);
@@ -91,8 +91,8 @@ namespace Printajmo.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Napačna prijava.");
-                    return PartialView("_PrijavaPartial",model);
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
             }
         }
 
@@ -180,7 +180,7 @@ namespace Printajmo.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return  View("_RegistracijaPartial",model);
+            return View(model);
         }
         //
         // GET: /Account/ConfirmEmail

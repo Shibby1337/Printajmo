@@ -335,6 +335,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -427,7 +428,7 @@
     <Content Include="vendor\font-awesome\scss\_screen-reader.scss" />
     <Content Include="vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="vendor\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\Shared\_TabelaPartial.cshtml" />
+    <Content Include="Views\Shared\_Tabela.cshtml" />
     <Content Include="Views\Shared\_PrijavaPartial.cshtml" />
     <Content Include="Views\Shared\_RegistracijaPartial.cshtml" />
     <Content Include="Views\Shared\_LoginRegPartial.cshtml" />
