@@ -66,7 +66,7 @@
                             @Html.DisplayFor(modelItem => item.a4barvnooboje)
                         </td>
 
-                        @if (this.User.IsInRole("Admin"))
+                        @if (this.User.IsInRole("Admin") || ViewBag.selected == "true")
                         {
                         <td>
                             <a class="btn icon-btn btn-default btn-edd editJS" data-url='@Url.Action("GetTiskarnaEdit","home", new { id =item.idtiskarne} )'>

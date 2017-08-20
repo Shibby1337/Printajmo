@@ -774,7 +774,7 @@
                 <div class="modal-header bg-modal">
                     <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">
-                        Zelmjevid
+                        Zemljevid
                     </h4>
                 </div>
                 <div id="tiskarneMap"></div>
@@ -783,6 +783,7 @@
     </div>
     <div id="modalContainerOut"></div>
     <script>
+        function initMap() { }
         $("#tiskarneModal").on("shown.bs.modal", function () {
             initMapTiskarne();
         });
@@ -943,12 +944,10 @@
         $("#tadd").show().addClass("pull-left");
         $("#tvse").show().addClass("pull-left");
         
-        @{
-            ViewBag.SelectedMoje = "burek";
-        }
         $.ajax({
                 type: "GET",
-            url: "/Home/MojeTiskarne",
+                url: "/Home/MojeTiskarne",
+                data: {selected: true},
             success: function (response) {
                 $("#idTabela").html(response);
                     onComplete();
