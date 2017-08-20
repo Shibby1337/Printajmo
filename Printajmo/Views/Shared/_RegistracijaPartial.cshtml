@@ -11,7 +11,8 @@
         <fieldset>
             <!-- Sign Up Form -->
             <!-- Text input-->
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="control-group">
                 @*<label class="control-label" for="userid">Uporabniško ime:</label>*@
                 @Html.LabelFor(m => m.Uporabnisko, new { @class = "control-label" })
@@ -80,8 +81,9 @@
             <div class="control-group">
                 <label class="control-label" for="confirmsignup"></label>
                 <div class="controls">
-                    <input type="submit" class="btn btn-xl button-login" value="Registriraj" />
-                    @*<button id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login">Registriraj</button>*@
+                    <input type="submit" id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login" value="Registriraj" />
+                    <button type="submit" id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login">Registriraj</button>
+                    
                 </div>
             </div>
         </fieldset>

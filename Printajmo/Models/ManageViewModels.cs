@@ -35,7 +35,7 @@ namespace Printajmo.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Potrdi novo geslo")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "Gesli se ne ujemata")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -64,7 +64,7 @@ namespace Printajmo.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Potrdi novo geslo")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "Gesli se ne ujemata")]
         public string ConfirmPassword { get; set; }
     }
 
