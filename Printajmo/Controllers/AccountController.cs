@@ -92,7 +92,7 @@ namespace Printajmo.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return PartialView("_PrijavaPartial",model);
             }
         }
 
@@ -180,7 +180,7 @@ namespace Printajmo.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return PartialView("_RegistracijaPartial",model);
         }
         //
         // GET: /Account/ConfirmEmail

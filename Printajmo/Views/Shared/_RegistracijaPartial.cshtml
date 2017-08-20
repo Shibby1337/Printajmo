@@ -8,15 +8,19 @@
 }
 <!--REGISTRACIJA -->
 
-
-<div class="tab-pane fade" id="signup">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
+   @using (Ajax.BeginForm("Register", "Account",
+                      new AjaxOptions
+                      {
+                          HttpMethod = "POST",
+                          InsertionMode = InsertionMode.Replace,
+                          UpdateTargetId = "signup"
+                      }))
+   {
         @Html.AntiForgeryToken()
         <fieldset>
             <!-- Sign Up Form -->
             <!-- Text input-->
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="control-group">
                 @*<label class="control-label" for="userid">Uporabniško ime:</label>*@
                 @Html.LabelFor(m => m.Uporabnisko, new { @class = "control-label" })
@@ -91,7 +95,6 @@
             </div>
         </fieldset>
     }
-</div>
   
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
