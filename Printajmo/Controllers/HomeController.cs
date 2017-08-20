@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Security.Principal;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
+
 namespace Printajmo.Controllers
 {
     public class HomeController : Controller
@@ -80,6 +84,16 @@ namespace Printajmo.Controllers
             int pageNumber = (page ?? 1);
             return tiskarne.ToPagedList(pageNumber, pageSize);
         }
+        public PagedList.IPagedList<Models.tiskarne> GetModelForTiskarna()
+        {
+            var tiskarne = from s in _db.tiskarne
+                           select s;
+            var id = User.Identity.GetUserId();
+            tiskarne = tiskarne.Where(s => s.lastnik.Equals(id));
+            tiskarne = tiskarne.OrderBy(s => s.naziv);
+            int pageSize = 15;
+            return tiskarne.ToPagedList(1, pageSize);
+        }
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             return View(GetModel(sortOrder, currentFilter, searchString, page));
@@ -87,13 +101,17 @@ namespace Printajmo.Controllers
 
         public ActionResult AjaxTabela(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+            return PartialView("_TabelaPartial", GetModel(sortOrder, currentFilter, searchString, page));
+        }
+        public ActionResult MojeTiskarne()
+        {
+            return PartialView("_TabelaPartial", GetModelForTiskarna());
         }
         public ActionResult DeleteEntry(int id, string sortOrder, string currentFilter, string searchString, int? page)
         {
             _db.tiskarne.Remove(_db.tiskarne.Find(id));
             _db.SaveChanges();
-            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+            return PartialView("_TabelaPartial", GetModel(sortOrder, currentFilter, searchString, page));
         }
         public ActionResult EditEntry(int id, string sortOrder, string currentFilter, string searchString, int? page, string naziv, string email, string telefonska, string ulica, string mesto, int postnast, decimal a4cb, decimal a4barvno, decimal a4cboboje, decimal a4boboje)
         {
@@ -110,7 +128,7 @@ namespace Printajmo.Controllers
             tiskarna.a4barvnooboje = a4boboje;
             _db.Entry(tiskarna).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
-            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+            return PartialView("_TabelaPartial", GetModel(sortOrder, currentFilter, searchString, page));
         }
 
         public ActionResult AddEntry(string sortOrder, string currentFilter, string searchString, int? page, string naziv, string email, string telefonska, string ulica, string mesto, int postnast, decimal a4cb, decimal a4barvno, decimal a4cboboje, decimal a4boboje)
@@ -126,9 +144,10 @@ namespace Printajmo.Controllers
             tiskarna.a4barvno = a4barvno;
             tiskarna.a4cboboje = a4cboboje;
             tiskarna.a4barvnooboje = a4boboje;
+            tiskarna.lastnik = User.Identity.GetUserId();
             _db.tiskarne.Add(tiskarna);
             _db.SaveChanges();
-            return PartialView("_Tabela", GetModel(sortOrder, currentFilter, searchString, page));
+            return PartialView("_TabelaPartial", GetModel(sortOrder, currentFilter, searchString, page));
         }
 
         public ActionResult GetTiskarnaDelete(int id)
@@ -154,6 +173,7 @@ namespace Printajmo.Controllers
         public JsonResult getTiskarneJson() {
             String str= "{\"tiskarne\": [";
             foreach (var item in _db.tiskarne) {
+                if(item.latitude != null || item.longitude != null)
                 str += "{\"lat\":\"" + item.latitude + "\",\"lng\":\"" + item.longitude+"\",\"id\":\""+item.idtiskarne+"\",\"title\":\""+item.naziv+"\"},";
             }
             str = str.TrimEnd(',') + "]}";

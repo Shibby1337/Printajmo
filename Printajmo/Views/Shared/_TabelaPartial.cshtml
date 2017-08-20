@@ -3,17 +3,6 @@
 @using PagedList.Mvc;
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-<div class="row">
-    <div class="pull-left">
-@if (this.User.IsInRole("Admin"))
-{
-        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
-            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
-            Dodaj
-        </a>
-}
-    </div>
-</div>
 
 <br />
 <br />
@@ -77,7 +66,7 @@
                             @Html.DisplayFor(modelItem => item.a4barvnooboje)
                         </td>
 
-                        @if (this.User.IsInRole("Admin"))
+                        @if (this.User.IsInRole("Admin") || ViewBag.SelectedMoje == "burek")
                         {
                         <td>
                             <a class="btn icon-btn btn-default btn-edd editJS" data-url='@Url.Action("GetTiskarnaEdit","home", new { id =item.idtiskarne} )'>
@@ -253,21 +242,6 @@
             $('#editModal').modal();
         });
 
-    });
-</script>
-
-<script>
-    $('.addJS').on('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var $addDiv = $('#modalContainer'),
-            url = $(this).data('url');
-
-        $.get(url, function (data) {
-            $addDiv.empty();
-            $addDiv.append(data);
-            $('#addNewModal').modal();
-        });
     });
 </script>
 

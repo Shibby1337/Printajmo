@@ -211,6 +211,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>Tiskarne.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>Tiskarne.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>Tiskarne.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>Tiskarne.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>Tiskarne.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tiskarne.Context.cs">
@@ -312,6 +327,7 @@
     <Content Include="Models\Tiskarne.edmx.diagram">
       <DependentUpon>Tiskarne.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\Roboto-Regular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -412,7 +428,7 @@
     <Content Include="vendor\font-awesome\scss\_screen-reader.scss" />
     <Content Include="vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="vendor\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\Shared\_Tabela.cshtml" />
+    <Content Include="Views\Shared\_TabelaPartial.cshtml" />
     <Content Include="Views\Shared\_PrijavaPartial.cshtml" />
     <Content Include="Views\Shared\_RegistracijaPartial.cshtml" />
     <Content Include="Views\Shared\_LoginRegPartial.cshtml" />

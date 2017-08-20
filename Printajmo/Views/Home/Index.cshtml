@@ -33,7 +33,9 @@
     <![endif]-->
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src=".../Scripts/jquery.validate.unobtrusive.js"></script>
     <script>
         function onBegin() {
             $("#loading").addClass("loading");
@@ -53,15 +55,68 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <img src="~/img/logos/Logo_with_text2.png" class="logo"/>
+                <img src="~/img/logos/Logo_with_text2.png" alt="printajmo" class="logo"/>
               
                 @*<a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>*@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
+            <!--login/register-->
+            <div class="accountView" id="accountViewMain">
+                @{
+                    var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+
+                    if (val1 == true)
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                <span class="tooltiptext">Odjava</span>
+
+                            }
+                        }
+                        <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                    }
+                    else
+                    {
+                        <span href="#prijava" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-log-in loginIco"></span><a href="#prijava" data-toggle="modal" data-target="#myModal" class="prijava">Prijava</a>
+                    }
+                }
+            </div>
+
+
+
             <div class="collapse navbar-collapse custom-nav" id="bs-example-navbar-collapse-1">
+                
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
+                    </li>
+                    <li class="account-li">
+                        <div class="accountView">
+                            @{
+                                if (val1 == true)
+                                {
+                                    if (Request.IsAuthenticated)
+                                    {
+                                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                            <span class="tooltiptext">Odjava</span>
+
+                                        }
+                                    }
+                                    <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                                }
+                                else
+                                {
+                                    <span href="#prijava" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-log-in loginIco"></span><a href="#prijava" data-toggle="modal" data-target="#myModal" class="prijava">Prijava</a>
+                                }
+                            }
+                        </div>
                     </li>
                     <li>
                         <a class="page-scroll nav-menu" href="#tiskarne">tiskarne</a>
@@ -73,37 +128,10 @@
                         <a class="page-scroll nav-menu" href="#about">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll nav-menu" href="#team">Team</a>
-                    </li>
-
-                    <li>
                         <a class="page-scroll nav-menu" href="#contact">Kontakt</a>
                     </li>
                 </ul>
-                <!--login/register-->
-                <div class="accountView">
-                    @{
-                        var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-
-                        if (val1 == true)
-                        {
-                            if (Request.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
-
-                                }
-                            }
-                            <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
-                        }
-                        else
-                        {
-                            <a href="#prijava" data-toggle="modal" data-target="#myModal">Prijava</a>
-                        }
-                    }
-                </div>
+               
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -122,14 +150,18 @@
     <section id="tiskarne">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center" style="padding-bottom:35px">
+                <div class="col-lg-12 text-center">
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-<div style="width:170px;">
-    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal"><h4 class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</h4>
+            @if (this.User.IsInRole("Admin")) {
+<div class="row zemljevid-div">
+    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+    <div class="zemljevid-text-div">
+        <a class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+    </div>   
 </div>
-  
+            }
     @*@using (Ajax.BeginForm("AjaxTabela", "Home",
                 new AjaxOptions
                 {
@@ -140,15 +172,59 @@
                     UpdateTargetId = "idTabela"
                 }))
                    {*@
+            <div class="row">
+                <div class="pull-left">
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
+                            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
+                            Dodaj
+                        </a>
+                    }
+                    else
+                    {
+                        <div id="tmap" class="row zemljevid-div" style="margin-bottom: 0px; margin-right:20px">
+                            <img id="icon-map" src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+                            <div class="zemljevid-text-div">
+                                <a id="text-zemljevid" class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+                            </div>
+                        </div>
+                        <div id="tadd" class="row zemljevid-div" style="margin-bottom: 0px; margin-right:20px">
+                            <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
+                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
+                                Dodaj
+                            </a>
+                        </div>
+
+
+                    }
+                    @if (this.User.IsInRole("Tiskarna"))
+                    {
+                        <div id="tmoje" class="row zemljevid-div" style="margin-bottom: 0px;">
+                            <img id="icon-print" src="~/img/print-icon.png" class="ico-map pull-left" onclick="mojeTiskanef()">
+                            <div class="zemljevid-text-div">
+                                <a id="text-moje" class="zemljevid-text" onclick="mojeTiskanef()">Moje Tiskarne</a>
+                            </div>
+                        </div>
+                        <div id="tvse" class="row zemljevid-div" style="margin-bottom: 0px;">
+                            <img id="icon-print" src="~/img/print-icon.png" class="ico-map pull-left" onclick="vseTiskanef()">
+                            <div class="zemljevid-text-div">
+                                <a id="text-moje" class="zemljevid-text" onclick="vseTiskanef()">Vse Tiskarne</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
             <div class="pull-right">
-                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control" style="width:auto; display:inline-block;" placeholder="Iskanje" />
+                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control iskanje"  placeholder="Iskanje" />
                 @*<button type="submit" class="btn">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>*@
             </div>
             @*}*@
             <div id="idTabela" class="row">
-                @Html.Partial("_Tabela", Model)
+                @Html.Partial("_TabelaPartial", Model)
             </div>
         </div>
     </section>
@@ -705,7 +781,7 @@
             </div>
         </div>
     </div>
-
+    <div id="modalContainerOut"></div>
     <script>
         $("#tiskarneModal").on("shown.bs.modal", function () {
             initMapTiskarne();
@@ -816,7 +892,7 @@
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
     @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    
 
     <!-- Contact Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
@@ -840,6 +916,83 @@
                     $("#idTabela").html(data);
                 }
             })
+        });
+    });
+</script>
+<script>
+    $(".prijava").hover(function () {
+        $(".loginIco").toggleClass("colors-printajmo-red");
+    });
+   
+</script>
+<script>
+    $("#text-zemljevid").hover(function () {
+        $("#icon-map").toggleClass("ico-hover");
+    });
+    $("#text-moje").hover(function () {
+        $("#icon-print").toggleClass("ico-hover");
+    });
+</script>
+
+<script>
+    function mojeTiskanef() {
+        $("#searchString").hide();
+        $("#tmap").hide();
+        $("#tmoje").hide();
+
+        $("#tadd").show().addClass("pull-left");
+        $("#tvse").show().addClass("pull-left");
+        
+        @{
+            ViewBag.SelectedMoje = "burek";
+        }
+        $.ajax({
+                type: "GET",
+            url: "/Home/MojeTiskarne",
+            success: function (response) {
+                $("#idTabela").html(response);
+                    onComplete();
+                },
+            error: function (e) {
+                    alert("error occured" + e);
+                }
+            });
+    };
+    function vseTiskanef() {
+        $("#searchString").show();
+        $("#tmap").show();
+        $("#tmoje").show();
+
+        $("#tadd").hide();
+        $("#tvse").hide();
+
+        $.ajax({
+            type: "GET",
+            url: "/Home/AjaxTabela",
+            data: {},
+            beforeSend: onBegin(),
+            success: function (response) {
+                $("#idTabela").html(response);
+                onComplete();
+            },
+            error: function (e) {
+                alert("error occured" + e);
+            }
+        });
+    };
+</script>
+
+<script>
+    $('.addJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $addDiv = $('#modalContainerOut'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $addDiv.empty();
+            $addDiv.append(data);
+            $('#addNewModal').modal();
         });
     });
 </script>

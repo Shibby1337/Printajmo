@@ -6,6 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="ba5d157ea23142a5958f83f6d010cedb" Name="Diagram1">
         <EntityTypeShape EntityType="tiskarneModel.tiskarne" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tiskarneModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="tiskarneModel.AspNetRoles" Width="1.5" PointX="3.75" PointY="2.5" />
+        <EntityTypeShape EntityType="tiskarneModel.AspNetUserClaims" Width="1.5" PointX="8.25" PointY="1" />
+        <EntityTypeShape EntityType="tiskarneModel.AspNetUserLogins" Width="1.5" PointX="8.25" PointY="3.75" />
+        <EntityTypeShape EntityType="tiskarneModel.AspNetUsers" Width="1.5" PointX="6" PointY="1.375" />
+        <AssociationConnector Association="tiskarneModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="tiskarneModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="tiskarneModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

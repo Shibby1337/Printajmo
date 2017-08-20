@@ -26,7 +26,8 @@ namespace Printajmo.Models
         public string email { get; set; }
         public string telefonska { get; set; }
         public string dodatno { get; set; }
-        public double longitude { get; set; }
-        public double latitude { get; set; }
+        public Nullable<double> longitude { get; set; }
+        public Nullable<double> latitude { get; set; }
+        public string lastnik { get; set; }
     }
 }

@@ -298,7 +298,9 @@ section {
 section h2.section-heading {
   font-size: 40px;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 60px;
+  font-weight:800;
+
 }
 section h3.section-subheading {
   font-size: 16px;
@@ -910,7 +912,7 @@ font-size: 14px
  color: #C83789;
 }
 .colors-printajmo-red {
- color: #F01313;
+ color: #F01313!important;
 }
 .colors-printajmo-redDark {
  color: #BD0606;
@@ -1048,30 +1050,108 @@ left:0px!important;
     margin-top:8px;
 }
 
-.custom-nav {
-    /*padding-right:100px!important;*/
+.accountView {
+    display:inline-block;
+    width: auto;
+    float:right!important;
+    margin-top: 15px;
+}
+@media (min-width: 991px) {
+   .custom-nav {
     width:80%!important;
 }
 
-.accountView {
-    display: table;
-    width: auto;
-    float:right;
-    position:relative;
-    right:-800px;
-    top:14px;
 }
+@media(min-width:768px) {
+    .account-li {
+        display:none!important;
+    }
+}
+
+
+@media (min-width:768px) and (max-width: 992px){
+  .navbar-right {
+    margin-right:0px;
+}
+    .custom-nav {
+    font-size: small;
+    width:100%!important;
+    }
+    .accountView a {
+    font-size: 14px!important;
+}
+    .logo {
+    padding-right:0px;
+    padding-left:0px;
+}
+}
+@media (max-width: 767px) {
+    #accountViewMain {
+    display:none;
+    }
+    .accountView {
+    position: relative;
+    right: 15px;
+    }
+     .account-li {
+        display:table!important;
+        width:100%;
+         border-bottom: 1px solid #262626;
+    }
+}
+
+
 .accountView a {
     font-size:16px;
     color:#FFFFFF;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;    
 }
+.accountView a:hover {
+    color:#f01313;
+}
 .odjavaLink {
     margin-left:15px;
     text-decoration: none;
+    text-transform:uppercase;
+}
+.tooltiptext {
+    visibility:hidden;
+    width: 120px;
+    background-color: #f01313;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 10px;
+}
+
+
+@media (min-width: 1422px) {
+    .odjavaLink:hover+ .tooltiptext {
+    visibility: visible;
+}
+}
+
+.loginIco {
+    color:#FFFFFF;
+    padding-right:5px;
+}
+.loginIco:hover {
+    color:#f01313;
+    cursor:pointer;
+}
+.loginIco:hover +a {
+     color:#f01313;
 }
 .prijava {
+     text-decoration: none;
 }
+
 .account-name {
     text-decoration: none;
 }
@@ -1082,17 +1162,49 @@ left:0px!important;
     cursor:pointer;
     filter: brightness(50%);
 }
-.zemljevid-text {
-   cursor:pointer;
-   margin-top: 15px;
-   margin-left: 55px;
-   padding-top:10px;
+.ico-hover {
+    cursor:pointer;
+    filter: brightness(50%);
 }
-.zemljevid-text:hover {
+.ico-map:hover + .zemljevid-text-div .zemljevid-text {
+     color:#f01313;
+   width:100px!important;
+}
+.zemljevid-div {
+    margin-bottom:20px;
+    margin-left: 0px;
+    display:inline-block;
+}
+.zemljevid-text-div {
+    padding-left: 55px;
+    margin-top: 8px;
+}
+.zemljevid-text {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;
+    color: #333;
+}
+.zemljevid-text:hover  {
    color:#f01313;
    width:100px!important;
 }
 #idTabela {
    margin-left:15px;
-    margin-right:15px;
+   margin-right:15px;
+}
+@font-face {
+    font-family: robotoRegular;
+    src: url(../fonts/glyphicons-halflings-regular.woff);
+}
+.iskanje {
+    width:300px; 
+    display:inline-block;
+}
+#tvse {
+    display:none;
+}
+#tadd {
+    display:none;
 }
