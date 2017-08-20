@@ -3,16 +3,20 @@
 
 <!--REGISTRACIJA -->
 
-
-<div class="tab-pane fade" id="signup">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Ajax.BeginForm("Register", "Account",
+             new AjaxOptions
+             {
+                 HttpMethod = "POST",
+                 InsertionMode = InsertionMode.Replace,
+                 UpdateTargetId = "signup"
+             }))
     {
-        @Html.AntiForgeryToken()
-        <fieldset>
-            <!-- Sign Up Form -->
-            <!-- Text input-->
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="control-group">
+            @Html.AntiForgeryToken()
+                <!-- Sign Up Form -->
+    
+                <!-- Text input-->
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="control-group">
                 @*<label class="control-label" for="userid">Uporabniško ime:</label>*@
                 @Html.LabelFor(m => m.Uporabnisko, new { @class = "control-label" })
                 <div class="controls">
@@ -38,14 +42,15 @@
                 @Html.LabelFor(m => m.Password, new { @class = "control-label" })
                 <div class="controls">
                     @*<input id="password" name="password" class="form-control" type="password" class="input-large" required="">*@
-                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    <em>1-8 Characters</em>
                 </div>
             </div>
 
             <!-- Text input-->
-           <div class="control-group">
+            <div class="control-group">
                 @*<label class="control-label" for="reenterpassword">Ponovi geslo:</label>*@
-               @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
                 <div class="controls">
                     @*<input id="reenterpassword" class="form-control" name="reenterpassword" type="password" class="input-large" required="">*@
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
@@ -54,28 +59,20 @@
 
             <!-- Multiple Radios(inline) -->
             <br>
-            <div class="control-group">
-                <label class="control-label" for="humancheck">Tip uporabnika:</label>
-                <div class="controls">
-                    @*<label class="radio inline" for="humancheck-0">
-                        <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">Uporabnik
-                    </label>
-                    <label class="radio inline" for="humancheck-1">
-                        <input type="radio" name="humancheck" id="humancheck-1" value="human">Tiskarna
-                    </label>*@
+        <div class="control-group">
+            <label class="control-label" for="humancheck">Tip uporabnika:</label>
+            <div class="controls">
+                <br />
+                @Html.RadioButtonFor(m => m.SelectRole, "Tiskarna")
+                <label>Tiskarna</label>
+                <br />
 
-                    <br />
-                    @Html.RadioButtonFor(m => m.SelectRole, "Tiskarna")
-                    <label>Tiskarna</label>
-                    <br />
-                   
-                   
-                    @Html.RadioButtonFor(m => m.SelectRole, "Uporabnik")
-                    <label> Uporabnik</label>
-                    
-                </div>
+
+                @Html.RadioButtonFor(m => m.SelectRole, "Uporabnik")
+                <label> Uporabnik</label>
+
             </div>
-
+        </div>
             <!-- Button -->
             <div class="control-group">
                 <label class="control-label" for="confirmsignup"></label>
@@ -84,10 +81,8 @@
                     @*<button id="confirmsignup" name="confirmsignup" class="btn btn-xl button-login">Registriraj</button>*@
                 </div>
             </div>
-        </fieldset>
     }
-</div>
-  
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

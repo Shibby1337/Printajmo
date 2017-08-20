@@ -33,7 +33,9 @@
     <![endif]-->
     <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src=".../Scripts/jquery.validate.unobtrusive.js"></script>
     <script>
         function onBegin() {
             $("#loading").addClass("loading");
@@ -222,7 +224,7 @@
             </div>
             @*}*@
             <div id="idTabela" class="row">
-                @Html.Partial("_Tabela", Model)
+                @Html.Partial("_TabelaPartial", Model)
             </div>
         </div>
     </section>
@@ -890,7 +892,7 @@
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
     @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    
 
     <!-- Contact Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
@@ -940,18 +942,21 @@
 
         $("#tadd").show().addClass("pull-left");
         $("#tvse").show().addClass("pull-left");
-
+        
+        @{
+            ViewBag.SelectedMoje = "burek";
+        }
         $.ajax({
-            type: "GET",
+                type: "GET",
             url: "/Home/MojeTiskarne",
             success: function (response) {
                 $("#idTabela").html(response);
-                onComplete();
-            },
+                    onComplete();
+                },
             error: function (e) {
-                alert("error occured" + e);
-            }
-        });
+                    alert("error occured" + e);
+                }
+            });
     };
     function vseTiskanef() {
         $("#searchString").show();
