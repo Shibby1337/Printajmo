@@ -428,7 +428,7 @@
     <Content Include="vendor\font-awesome\scss\_screen-reader.scss" />
     <Content Include="vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="vendor\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\Shared\_TabelaPartial.cshtml" />
+    <Content Include="Views\Shared\_Tabela.cshtml" />
     <Content Include="Views\Shared\_PrijavaPartial.cshtml" />
     <Content Include="Views\Shared\_RegistracijaPartial.cshtml" />
     <Content Include="Views\Shared\_LoginRegPartial.cshtml" />
