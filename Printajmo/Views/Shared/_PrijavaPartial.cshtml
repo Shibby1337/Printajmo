@@ -1,4 +1,17 @@
 ﻿@model Printajmo.Models.LoginViewModel
+@using System;
+@using System.Globalization;
+@using System.Linq;
+@using System.Security.Claims;
+@using System.Threading.Tasks;
+@using System.Web;
+@using System.Web.Mvc;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using Microsoft.AspNet.Identity.Owin;
+@using Microsoft.Owin.Security;
+@using Printajmo.Models;
+@using System.Diagnostics;
 
 <!--PRIJAVA -->
  @using (Ajax.BeginForm("Login", "Account",
@@ -7,6 +20,9 @@
                                      OnComplete = "complete"
                                  }))
  {
+
+   
+
     @Html.AntiForgeryToken()
         <fieldset>
             <!-- Sign In Form -->
@@ -62,11 +78,14 @@
 
 <script>
     function complete(result) {
-        var isError =@Html.Raw(Json.Encode(ViewData.ModelState.IsValid));
+        var isError = @Html.Raw(Json.Encode(ViewData.ModelState.IsValid));
         if (isError) {
-            // there was an error => we update the container of the form
+            
             $('#signin').html(result.responseText);
+            //$('#myModal').modal('hide');
         } else {
+
+            $('#myModal').modal('hide');
             location.reload();
         }
     }
