@@ -3,7 +3,7 @@
 @using Microsoft.AspNet.Identity
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Printajmo";
 }
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Printajmo ~ Vse tiskarne na enem mestu</title>
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Fonts -->
@@ -57,7 +57,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <img src="~/img/logos/Logo_with_text2.png" alt="printajmo" class="logo"/>
+                <a class="page-scroll" href="#page-top"><img src="~/img/logos/Logo_with_text2.png" alt="printajmo" class="logo"/></a>
               
                 @*<a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>*@
             </div>
@@ -156,29 +156,16 @@
                     <h2 class="section-heading">TISKARNE & FOTOKOPIRNICE</h2>
                 </div>
             </div>
-            @if (this.User.IsInRole("Admin")) {
-<div class="row zemljevid-div">
-    <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
-    <div class="zemljevid-text-div">
-        <a class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
-    </div>   
-</div>
-            }
-    @*@using (Ajax.BeginForm("AjaxTabela", "Home",
-                new AjaxOptions
-                {
-                    OnBegin = "onBegin",
-                    OnComplete = "onComplete",
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "idTabela"
-                }))
-                   {*@
-            <div class="row">
-                <div class="pull-left">
+            <div class="row navTable">
                     @if (this.User.IsInRole("Admin"))
                     {
-                        <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
+                        <div class="zemljevid-div">
+                            <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+                            <div class="zemljevid-text-div">
+                                <a class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+                            </div>
+                        </div>
+                        <a class="btn icon-btn btn-default btn-add addJS" style="margin-left:5px;" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
                             <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
                             Dodaj
                         </a>
@@ -215,16 +202,10 @@
                             </div>
                         </div>
                     }
-                </div>
+                    <div class="pull-right">
+                        <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control iskanje" placeholder="Iskanje" />
+                    </div>
             </div>
-
-            <div class="pull-right">
-                <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control iskanje"  placeholder="Iskanje" />
-                @*<button type="submit" class="btn">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>*@
-            </div>
-            @*}*@
             <div id="idTabela" class="row">
                 @Html.Partial("_TabelaPartial", Model)
             </div>
@@ -564,7 +545,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Your Website 2016</span>
+                    <span class="copyright"> &copy; Printajmo 2017. Vse pravice pridržane.</span>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
@@ -582,10 +563,10 @@
                 <div class="col-md-4">
                     <ul class="list-inline quicklinks">
                         <li>
-                            <a href="#">Privacy Policy</a>
+                            <a href="#">Politika zasebnosti</a>
                         </li>
                         <li>
-                            <a href="#">Terms of Use</a>
+                            <a href="#">Pogoji uporabe</a>
                         </li>
                     </ul>
                 </div>

@@ -2,8 +2,6 @@
 
 @model Printajmo.Models.LoginViewModel
 
-
-
     @Html.AntiForgeryToken()
     <!-- Modal -->
     <div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -32,4 +30,13 @@
                 
             </div>
         </div>
-    </div>
+    
+<script>
+    function complete(data) {
+        if (data.responseText != "") {
+            $('#signin').html(data.responseText);
+        } else {
+                location.reload();
+            }
+        }
+</script>

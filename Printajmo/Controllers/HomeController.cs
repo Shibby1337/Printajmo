@@ -16,7 +16,7 @@ namespace Printajmo.Controllers
         Models.tiskarneEntities _db;
         public HomeController()
         {
-           if(_db == null)
+           if (_db == null)
                 _db = new Models.tiskarneEntities();
         }
         public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string currentFilter, string searchString, int? page)
