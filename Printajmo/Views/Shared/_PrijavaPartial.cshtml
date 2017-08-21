@@ -60,14 +60,3 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-<script>
-    function complete(result) {
-        var isError =@Html.Raw(Json.Encode(ViewData.ModelState.IsValid));
-        if (isError) {
-            // there was an error => we update the container of the form
-            $('#signin').html(result.responseText);
-        } else {
-            location.reload();
-        }
-    }
-</script>

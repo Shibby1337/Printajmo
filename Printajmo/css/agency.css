@@ -1155,6 +1155,10 @@ left:0px!important;
 .account-name {
     text-decoration: none;
 }
+.navTable {
+    padding-left:15px;
+    padding-bottom: 15px;
+}
 .ico-map {
     width:40px;
 }
@@ -1171,13 +1175,12 @@ left:0px!important;
    width:100px!important;
 }
 .zemljevid-div {
-    margin-bottom:20px;
     margin-left: 0px;
     display:inline-block;
 }
 .zemljevid-text-div {
+    margin-top:8px;
     padding-left: 55px;
-    margin-top: 8px;
 }
 .zemljevid-text {
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
