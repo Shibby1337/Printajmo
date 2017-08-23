@@ -1027,8 +1027,8 @@ font-size: 14px
     left:-80px;
 }
 .urediRacun:hover {
-    color:crimson;
-    cursor: pointer!important;
+    color: #f01313;
+    cursor: pointer !important;
 }
 
 .urediRacun {
