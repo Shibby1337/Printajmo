@@ -8,8 +8,7 @@
                       new AjaxOptions
                       {
                           HttpMethod = "POST",
-                          InsertionMode = InsertionMode.Replace,
-                          UpdateTargetId = "signup"
+                          OnComplete = "completeRegister"
                       }))
    {
         @Html.AntiForgeryToken()

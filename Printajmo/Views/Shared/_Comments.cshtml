@@ -1,0 +1,35 @@
+﻿@model IQueryable<Printajmo.Models.Comments>
+<ul class="formComments">
+    @foreach (var item in Model)
+    {
+
+        <li class="commentLi commentstep-1" data-commentid="@item.idComment">
+            <table class="form-comments-table">
+                <tr>
+                    <td><div class="comment-timestamp">@item.time</div></td>
+                    <td><div class="comment-user">@item.name</div></td>
+                    <td>
+                        <div class="comment-avatar">
+                            @*<img src="@item.img">*@
+                            <img src="../img/profile-icon.png">
+                        </div>
+                    </td>
+                    <td>
+                        <div id="comment-@item.idComment" data-commentid="@item.idComment" class="comment comment-step1">
+                            @item.comment
+                            <div id="commentactions-@item.idComment" class="comment-actions">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Reply</button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </li>
+
+    }
+</ul>
+

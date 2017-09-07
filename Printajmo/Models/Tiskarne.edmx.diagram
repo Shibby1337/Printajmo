@@ -4,16 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ba5d157ea23142a5958f83f6d010cedb" Name="Diagram1" ZoomLevel="91">
+      <Diagram DiagramId="ba5d157ea23142a5958f83f6d010cedb" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="tiskarneModel.tiskarne" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="tiskarneModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="tiskarneModel.AspNetRoles" Width="1.5" PointX="3.75" PointY="2.5" />
         <EntityTypeShape EntityType="tiskarneModel.AspNetUserClaims" Width="1.5" PointX="8.25" PointY="1" />
         <EntityTypeShape EntityType="tiskarneModel.AspNetUserLogins" Width="1.5" PointX="8.25" PointY="3.75" />
         <EntityTypeShape EntityType="tiskarneModel.AspNetUsers" Width="1.5" PointX="6" PointY="1.375" />
         <AssociationConnector Association="tiskarneModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="tiskarneModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="tiskarneModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="tiskarneModel.Comments" Width="1.5" PointX="10.375" PointY="6" />
+        <EntityTypeShape EntityType="tiskarneModel.ratings" Width="1.5" PointX="11.25" PointY="0.75" />
+        <AssociationConnector Association="tiskarneModel.FK_Comments_AspNetUsers" />
+        <AssociationConnector Association="tiskarneModel.FK_ratings_AspNetUsers" />
+        <AssociationConnector Association="tiskarneModel.FK_Comments_tiskarne" />
+        <AssociationConnector Association="tiskarneModel.FK_ratings_tiskarne" />
+        <AssociationConnector Association="tiskarneModel.AspNetUserRoles1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

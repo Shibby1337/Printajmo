@@ -38,5 +38,12 @@
         } else {
                 location.reload();
             }
+    }
+    function completeRegister(data) {
+        if (data.responseText != "") {
+            $('#signup').html(data.responseText);
+        } else {
+            location.reload();
         }
+    }    
 </script>

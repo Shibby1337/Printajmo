@@ -16,7 +16,7 @@ namespace Printajmo.Controllers
         Models.tiskarneEntities _db;
         public HomeController()
         {
-           if (_db == null)
+            if (_db == null)
                 _db = new Models.tiskarneEntities();
         }
         public PagedList.IPagedList<Models.tiskarne> GetModel(string sortOrder, string currentFilter, string searchString, int? page)
@@ -112,7 +112,8 @@ namespace Printajmo.Controllers
         {
             _db.tiskarne.Remove(_db.tiskarne.Find(id));
             _db.SaveChanges();
-            if (User.IsInRole("Tiskarna")) {
+            if (User.IsInRole("Tiskarna"))
+            {
                 ViewBag.Selected = "true";
                 return PartialView("_TabelaPartial", GetModelForTiskarna());
             }
@@ -194,14 +195,86 @@ namespace Printajmo.Controllers
         {
             return PartialView("_AddNewPartial");
         }
-        public JsonResult getTiskarneJson() {
-            String str= "{\"tiskarne\": [";
-            foreach (var item in _db.tiskarne) {
-                if(item.latitude != null || item.longitude != null)
-                    str += "{\"lat\":\"" + item.latitude + "\",\"lng\":\"" + item.longitude+"\",\"id\":\""+item.idtiskarne+"\",\"title\":\""+item.naziv+"\"},";
+        public JsonResult getTiskarneJson()
+        {
+            String str = "{\"tiskarne\": [";
+            foreach (var item in _db.tiskarne)
+            {
+                if (item.latitude != null || item.longitude != null)
+                    str += "{\"lat\":\"" + item.latitude + "\",\"lng\":\"" + item.longitude + "\",\"id\":\"" + item.idtiskarne + "\",\"title\":\"" + item.naziv + "\"},";
             }
             str = str.TrimEnd(',') + "]}";
             return Json(str, JsonRequestBehavior.AllowGet);
+        }
+        public void Rate(int tiskarnaID, int ratingID)
+        {
+            var idUser = User.Identity.GetUserId();
+            var rating = new Printajmo.Models.ratings();
+            var ratingDB = from s in _db.ratings
+                           where s.idUser == idUser && s.idTiskarna == tiskarnaID
+                           select s;
+            if (ratingDB.Any())
+            {
+                rating = _db.ratings.Find(ratingDB.First().idRating);
+                rating.rating = ratingID;
+                _db.Entry(rating).State = System.Data.Entity.EntityState.Modified;
+            }
+            else
+            {
+                rating.idTiskarna = tiskarnaID;
+                rating.idUser = User.Identity.GetUserId();
+                rating.rating = ratingID;
+                _db.ratings.Add(rating);
+
+            }
+            _db.SaveChanges();
+            //adding to tiskarne
+            var allRatings = from s in _db.ratings
+                             where s.idTiskarna == tiskarnaID
+                             select s.rating;
+
+            if (allRatings.Any())
+            {
+                var sum = 0;
+                foreach (var value in allRatings)
+                {
+                    sum += value;
+                }
+                double result = (double)sum / (double)allRatings.Count();
+                var tiskarna = _db.tiskarne.Find(tiskarnaID);
+                tiskarna.rating = (decimal)result;
+                tiskarna.voteNumber = allRatings.Count();
+                _db.Entry(tiskarna).State = System.Data.Entity.EntityState.Modified;
+            }
+
+            _db.SaveChanges();
+
+        }
+        public ActionResult sendComment(int tiskarnaID, string comment, DateTime time, int parentID)
+        {
+            var commentE = new Printajmo.Models.Comments();
+            commentE.idTiskarna = tiskarnaID;
+            commentE.idUser = User.Identity.GetUserId();
+            //commentC.parrentID = parentID;
+            commentE.comment = comment;
+            commentE.time = time;
+            commentE.name = User.Identity.Name;
+            commentE.img = "~/img/profile-icon.png";
+
+            _db.Comments.Add(commentE);
+            _db.SaveChanges();
+            return PartialView("_Comments", getComments(tiskarnaID));
+        }
+        public IQueryable<Printajmo.Models.Comments> getComments(int tiskarnaID)
+        {
+            var model = from s in _db.Comments
+                        where s.idTiskarna == tiskarnaID
+                        select s;
+            model = model.OrderBy(s => s.time);
+            return model;
+        }
+        public ActionResult loadComments(int tiskarnaID) {
+            return PartialView("_Comments", getComments(tiskarnaID));
         }
         public ActionResult About()
         {

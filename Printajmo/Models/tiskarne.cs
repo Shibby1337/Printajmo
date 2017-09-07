@@ -14,6 +14,13 @@ namespace Printajmo.Models
     
     public partial class tiskarne
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tiskarne()
+        {
+            this.Comments = new HashSet<Comments>();
+            this.ratings = new HashSet<ratings>();
+        }
+    
         public int idtiskarne { get; set; }
         public string naziv { get; set; }
         public Nullable<decimal> a4cb { get; set; }
@@ -29,5 +36,12 @@ namespace Printajmo.Models
         public Nullable<double> longitude { get; set; }
         public Nullable<double> latitude { get; set; }
         public string lastnik { get; set; }
+        public Nullable<decimal> rating { get; set; }
+        public Nullable<int> voteNumber { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ratings> ratings { get; set; }
     }
 }
