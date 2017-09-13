@@ -8,6 +8,9 @@ using PagedList;
 using System.Security.Principal;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
+using System.Json;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Printajmo.Controllers
 {
@@ -206,6 +209,7 @@ namespace Printajmo.Controllers
             str = str.TrimEnd(',') + "]}";
             return Json(str, JsonRequestBehavior.AllowGet);
         }
+      
         public void Rate(int tiskarnaID, int ratingID)
         {
             var idUser = User.Identity.GetUserId();
