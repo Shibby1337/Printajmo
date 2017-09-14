@@ -27,16 +27,11 @@ namespace Printajmo.Controllers
             var tiskarne = _db.tiskarne.Select(e => new
             {
                 idtiskarne = e.idtiskarne,
+                rating = e.rating,
                 naziv = e.naziv,
+                naslov = e.ulica + ", " + e.postnast + " " + e.mesto,
                 a4cb = e.a4cb,
                 a4barvno = e.a4barvno,
-                a4cboboje = e.a4cboboje,
-                ulica = e.ulica,
-                postnast = e.postnast,
-                mesto = e.mesto,
-                email = e.email,
-                telefonska = e.telefonska,
-                dodatno = e.dodatno,
                 longitude = e.longitude,
                 latitude = e.latitude
             }).ToList();
