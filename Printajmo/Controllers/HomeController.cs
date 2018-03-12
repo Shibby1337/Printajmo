@@ -165,6 +165,8 @@ namespace Printajmo.Controllers
             tiskarna.a4cboboje = a4cboboje;
             tiskarna.a4barvnooboje = a4boboje;
             tiskarna.lastnik = User.Identity.GetUserId();
+            tiskarna.latitude = 15.412162;
+            tiskarna.longitude = 45.412162;
             _db.tiskarne.Add(tiskarna);
             _db.SaveChanges();
             if (User.IsInRole("Tiskarna"))

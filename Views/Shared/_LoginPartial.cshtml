@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+   
+
+   @*<ul class="nav navbar-nav navbar - right">
+
+          <li><a href="javascript:document.getElementById('logoutForm').submit()">Odjava</a></li>
+    </ul>*@
+   
+    <ul class="nav navbar-nav navbar - right">
+        
+            @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Odjava</a></li>
+        <li>
+            <a href="#racun1" data-toggle="modal" data-target="#modalRacun">Racun</a>
+        </li>
+       </ul>
+
+     }
+ }
+ else
+{
+
+ }
+
+<section id="racun1">
+    @Html.Partial("_UrediRacun", new Printajmo.Models.ChangePasswordViewModel());
+</section>

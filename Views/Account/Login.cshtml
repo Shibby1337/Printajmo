@@ -1,0 +1,62 @@
+﻿@model Printajmo.Models.LoginViewModel
+<!--PRIJAVA -->
+<div class="tab-pane fade active in" id="signin">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <!-- Sign In Form -->
+            <!-- Text input-->
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="control-group">
+                @*<label class="control-label" for="userid">Email:</label>*@
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                <div class="controls">
+                    <input required="" id="userid" name="userid" type="text">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!-- Password input-->
+            <div class="control-group">
+                @*<label class="control-label" for="passwordinput">Geslo:</label>*@
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                <div class="controls">
+                    <input required="" id="passwordinput" name="passwordinput" type="password" for="m =>m.Password">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <!-- Button -->
+            <div class="control-group">
+                <div class="controls">
+                    <br />
+                    <a href="#pozabljeno" data-toggle="tab">Pozabljeno geslo?</a>
+                </div>
+            </div>
+
+
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="signin"></label>
+                <div class="controls">
+                    @*<button type="submit" id="signin" name="signin" class="btn btn-xl button-login">Prijavi</button>*@
+                    <input type="submit" value="Prijavi" class="btn btn-xl button-login" />
+                </div>
+            </div>
+
+
+
+        </fieldset>
+        @*<section id="#pozabljeno">
+                @Html.Partial("_ForgotPassword", new Printajmo.Models.ForgotPasswordViewModel())
+            </section>*@
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

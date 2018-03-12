@@ -1,0 +1,42 @@
+﻿@model Printajmo.Models.tiskarne
+<!-- Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content paddingBost">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="padding-left:10px;">
+                    <p style="font-weight:bold">@Model.naziv</p>
+                    <p>@Model.ulica @Model.mesto</p>
+                    <p>@Model.email</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">PREKLIČI</button>
+                        @Ajax.ActionLink("zbriši", "DeleteEntry",
+    new { id = Model.idtiskarne, sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize },
+    new AjaxOptions
+    {
+        OnBegin = "closeModal()",
+        HttpMethod = "GET",
+        UpdateTargetId = "idTabela",
+        InsertionMode = InsertionMode.Replace
+    }, new { @class = "btn btn-l btn-primary" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function closeModal() {
+        $('#deleteModal').modal("hide");
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    };
+</script>

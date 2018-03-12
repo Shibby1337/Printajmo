@@ -226,6 +226,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AndroidAccountController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AndroidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -379,7 +380,6 @@
       <DependentUpon>Tiskarne.edmx</DependentUpon>
       <LastGenOutput>Tiskarne1.cs</LastGenOutput>
     </Content>
-    <Content Include="obj\Debug\Printajmo.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Printajmo.dll" />
     <Content Include="obj\Debug\Printajmo.pdb" />
     <Content Include="Scripts\bootstrap.js" />
@@ -551,7 +551,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6320</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6320/</IISUrl>
+          <IISUrl>http://localhost:1337/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

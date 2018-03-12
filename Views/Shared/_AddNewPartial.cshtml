@@ -1,0 +1,129 @@
+﻿<!-- Modal -->
+<div id="addNewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 128%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Dodaj Tiskarno
+                </h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Naziv</label>
+                        <div class="controls col-xs-9">
+                            <input id="naziv" type="text" class="form-control" placeholder="Vnesite naziv*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Email</label>
+                        <div class="controls col-xs-9">
+                            <input id="email" type="text" class="form-control" placeholder="Vnesite email*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Telefonska</label>
+                        <div class="controls col-xs-9">
+                            <input id="telefonska" type="text" class="form-control" placeholder="Vnesite telefonsko st.*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Ulica</label>
+                        <div class="controls col-xs-9">
+                            <input id="ulica" type="text" class="form-control" placeholder="Vnesite ulico*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Mesto</label>
+                        <div class="controls col-xs-9">
+                            <input id="mesto" type="text" class="form-control" placeholder="Vnesite mesto*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Poštna št:</label>
+                        <div class="controls col-xs-9">
+                            <input id="postnast" type="text" class="form-control" placeholder="Vnesite poštno št.*">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">A4CB</label>
+                        <div class="controls col-xs-9">
+                            <div class="input-group">
+                                <span class="input-group-addon">€</span>
+                                <input id="a4cb" type="text" class="form-control" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">A4Barvno</label>
+                        <div class="controls col-xs-9">
+                            <div class="input-group">
+                                <span class="input-group-addon">€</span>
+                                <input id="a4barvno" type="text" class="form-control" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">A4CBOboje</label>
+                        <div class="controls col-xs-9">
+                            <div class="input-group">
+                                <span class="input-group-addon">€</span>
+                                <input id="a4cboboje" type="text" class="form-control" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">A4BOboje</label>
+                        <div class="controls col-xs-9">
+                            <div class="input-group">
+                                <span class="input-group-addon">€</span>
+                                <input id="a4boboje" type="text" class="form-control" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">PREKLIČI</button>
+                    <button type="button" class="btn btn-l btn-primary addJQ" data-dismiss="modal">DODAJ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+    $(document).ready(function (){
+        $(".addJQ").click(function () {
+            $('#addNewModal').modal("hide");
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $.ajax({
+                async: true,
+                url: "/Home/AddEntry",
+                data: {
+                    sortOrder: "@ViewBag.sortOrder",
+                    searchString: $('#searchString').val(),
+                    currentFilter: "@ViewBag.CurrentFilter",
+                    pageSize: "@ViewBag.PageSize",
+                    naziv: $('#naziv').val(),
+                    email: $('#email').val(),
+                    telefonska: $('#telefonska').val(),
+                    ulica: $('#ulica').val(),
+                    mesto: $('#mesto').val(),
+                    postnast: $('#postnast').val(),
+                    a4cb: $('#a4cb').val(),
+                    a4barvno: $('#a4barvno').val(),
+                    a4cboboje: $('#a4cboboje').val(),
+                    a4boboje: $('#a4boboje').val(),
+                },
+                type: "Post",
+                success: function (data) {
+                    $("#idTabela").html(data);
+                }
+            })
+        });
+    });
+    </script>

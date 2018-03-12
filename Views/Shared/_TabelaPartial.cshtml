@@ -1,0 +1,392 @@
+﻿
+@model PagedList.IPagedList<Printajmo.Models.tiskarne>
+@using PagedList.Mvc;
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $(".star").hover(function () {
+            if ($(this).hasClass("fa-star-o")) {
+                $(this).toggleClass("fa-star").toggleClass("fa-star-o").toggleClass("was-empty");;
+            }
+            if ($(this).hasClass("fa-star-half-empty")) {
+                $(this).toggleClass("fa-star").toggleClass("fa-star-half-empty").toggleClass("was-half-empty");
+            }
+            $(this).prevAll("i").each(function () {
+                if ($(this).hasClass("fa-star-o")) {
+                    $(this).toggleClass("fa-star").toggleClass("fa-star-o").toggleClass("was-empty");
+                }
+                if ($(this).hasClass("fa-star-half-empty")) {
+                    $(this).toggleClass("fa-star").toggleClass("fa-star-half-empty").toggleClass("was-half-empty");
+                }
+
+            });
+
+            $(this).mouseout(function () {
+                if ($(this).hasClass("was-empty")) {
+                    $(this).removeClass().addClass("fa star fa-star-o");
+                }
+                if ($(this).hasClass("was-half-empty")) {
+                    $(this).removeClass().addClass("fa star fa-star-half-empty");
+                }
+                $(this).prevAll("i").each(function () {
+                    if ($(this).hasClass("was-empty")) {
+                        $(this).removeClass().addClass("fa star fa-star-o");
+                    }
+                    if ($(this).hasClass("was-half-empty")) {
+                        $(this).removeClass().addClass("fa star fa-star-half-empty");
+                    }
+                })
+
+            });
+        });
+        $(".star").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if ("@User.IsInRole("Tiskarna")"=="True" || "@User.Identity.IsAuthenticated" == "False") {
+                alert("Ocenjujejo lahko le prijavljeni uporabniki!");
+                return;
+            }
+
+            $(this).removeClass().addClass("fa fa-star star").prevAll().removeClass().addClass("fa fa-star star");
+            $(this).nextAll().removeClass().addClass("fa fa-star-o star");
+            var ratingID = parseInt($(this).attr("id"));
+            var curentDIVRes = $(this).parent().next();
+            $.ajax({
+                type: "POST",
+                url: "/Home/Rate",
+                data: { tiskarnaID: parseInt($(this).parent().attr("id").substring(2)), ratingID: ratingID},
+                success: function (response) {
+                    curentDIVRes.text("\"Ocenili ste s (" + ratingID + ")\"");
+                },
+                error: function (e) {
+                    alert("error occured" + e);
+                }
+            });
+
+
+        });
+        //var $tiskarnaID = parseInt($(this).parent().attr("id").substring(2));
+        //// call ajax methods to update database
+
+        //var url = "/home/Rate/" + $ratingID + parseInt($(this).attr("id"));
+
+    });
+
+
+    //$('.deleteJS').on('click', function (e) {
+    //    e.preventDefault();
+    //    e.stopPropagation();
+    //    var $deleteDiv = $('#modalContainer'),
+    //        url = $(this).data('url');
+
+    //    $.get(url, function (data) {
+    //        $deleteDiv.empty();
+    //        $deleteDiv.append(data);
+    //        $('#deleteModal').modal();
+    //    });
+
+    //});
+</script>
+
+
+<div id="loading" class="clearfix"></div>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr style="background-color:#ebebeb">
+                    <th>
+                        <a id="rating">Ocena</a>
+                    </th>
+                    <th>
+                        @*@Ajax.ActionLink("Naziv", "AjaxTabela", new { sortOrder = ViewBag.NazivSort, currentFilter = ViewBag.CurrentFilter, pageSize = ViewBag.PageSize }, new AjaxOptions
+                            {
+                                OnBegin = "onBegin",
+                                OnComplete = "onCompleteNaziv",
+                                HttpMethod = "GET",
+                                UpdateTargetId = "idTabela",
+                                InsertionMode = InsertionMode.Replace
+                            })*@
+
+                        <a id="Naziv" name="naziv" onclick="textClickSort(this)">Naziv</a> <i class="fa fa-fw fa-sort"></i>
+
+                    </th>
+                    <th>
+                        <a id="naslovTH">Naslov</a>
+                    </th>
+                    <th>
+                        <a id="A4CB" onclick="textClickSort(this)">A4CB</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4B" onclick="textClickSort(this)">A4Barvno</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4CBO" onclick="textClickSort(this)">A4CBOboje</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th>
+                        <a id="A4BO" onclick="textClickSort(this)">A4BOboje</a> <i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="link details" data-url='@Url.Action("GetTiskarnaDetails", "home", new { id = item.idtiskarne })'>
+                        <td>
+                            <div id="t_@item.idtiskarne">
+                                @{
+                                    double number;
+                                    if (item.rating == null)
+                                    {
+                                        number = 0.00;
+                                    }
+                                    else
+                                    {
+                                        number = ((double)item.rating);
+                                    }
+                                    long intPart = (long)number;
+                                    double fractionalPart = (number - intPart) * 100;
+                                    int i = 1;
+                                    while (i <= intPart)
+                                    {
+                                        <i class="fa fa-star star" align="middle" id="@i"></i>
+                                        i++;
+                                    }
+                                    if (fractionalPart < 25 && fractionalPart > 0)
+                                    {
+                                        <i class="fa fa-star-o star" align="middle" id="@i"></i>
+                                        i++;
+                                    }
+                                    if (fractionalPart >= 25 && fractionalPart < 75)
+                                    {
+                                        <i class="fa fa-star-half-empty star" align="middle" id="@i"></i>
+                                        i++;
+                                    }
+                                    if (fractionalPart >= 75)
+                                    {
+                                        <i class="fa fa-star star" align="middle" id="@i"></i>
+                                        i++;
+                                    }
+                                    while (i <= 5)
+                                    {
+                                        <i class="fa fa-star-o star" align="middle" id="@i"></i>
+                                        i++;
+                                    }
+                                }
+                            </div>
+                            <p class="result"></p>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.naziv)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ulica), @Html.DisplayFor(modelItem => item.mesto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4cb)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4barvno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4cboboje)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a4barvnooboje)
+                        </td>
+
+                        @if (this.User.IsInRole("Admin") || ViewBag.selected == "true")
+                        {
+                            <td>
+                                <a class="btn icon-btn btn-default btn-edd editJS" data-url='@Url.Action("GetTiskarnaEdit","home", new { id =item.idtiskarne} )'>
+                                    <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-edit img-circle text-default "></span>
+                                    Uredi
+                                </a>
+                                <a class="btn icon-btn btn-default btn-edd deleteJS" data-url='@Url.Action("GetTiskarnaDelete","home", new { id =item.idtiskarne} )'>
+                                    <span style="color:#333" class="glyphicon btn-glyphicon glyphicon-remove img-circle text-default "></span>
+                                    Zbriši
+                                </a>
+
+                            </td>
+                        }
+                    </tr>
+
+                                    }
+            </tbody>
+        </table>
+        Stran @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("AjaxTabela", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+            {
+                Display = PagedListDisplayMode.IfNeeded,
+                MaximumPageNumbersToDisplay = 10
+            },
+            new AjaxOptions
+            {
+                OnBegin = "onBegin",
+                OnComplete = "onComplete",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "Get",
+                UpdateTargetId = "idTabela"
+            }))
+
+    </div>
+
+    <div id="modalContainer">
+    </div>
+
+</div>
+
+<script>
+    function onBegin() {
+        $("#loading").addClass("loading");
+    }
+    function onComplete() {
+        $("#loading").removeClass("loading");
+    }
+</script>
+<script>
+    $('.fa-sort, .fa-sort-asc, .fa-sort-desc').on('click', function () {
+        //$(this).removeClass('fa-sort');
+        //    alert(!this.asc);
+        //this.asc = !this.asc;
+        //if (this.asc) {
+        //    $(this).removeClass('fa-sort-asc').addClass('fa-sort-desc');
+        //} else {
+        //    $(this).removeClass('fa-sort-desc').addClass('fa-sort-asc');
+        //}
+        var id = $(this).prev().attr("id");
+        sort(id);
+    });
+
+    function textClickSort(elem) {
+        var id = $(elem).attr("id");
+        sort(id);
+    }
+
+    function sort(id) {
+        var sortParm;
+        var CurrentFilter = "@ViewBag.CurrentFilter";
+        var PageSize = "@ViewBag.PageSize";
+        switch (id) {
+            case "Naziv":
+                sortParm = "@ViewBag.nazivSortParm";
+                break;
+            case "A4CB":
+                sortParm = "@ViewBag.A4CBSortParm";
+                break;
+            case "A4B":
+                sortParm = "@ViewBag.A4BSortParm";
+                break;
+            case "A4CBO":
+                sortParm = "@ViewBag.A4CBOSortParm";
+                break;
+            case "A4BO":
+                sortParm = "@ViewBag.A4BOSortParm";
+                break;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/Home/AjaxTabela",
+            data: { sortOrder: sortParm, currentFilter: CurrentFilter, pageSize: PageSize },
+            beforeSend: onBegin(),
+            success: function (response) {
+                $("#idTabela").html(response);
+                onComplete();
+                sortGlyph(sortParm);
+            },
+            error: function (e) {
+                alert("error occured" + e);
+            }
+        });
+    }
+
+    function sortGlyph(sortParm) {
+        $("#A4CB").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4B").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4CBO").next().removeClass().addClass("fa fa-fw fa-sort");
+        $("#A4BO").next().removeClass().addClass("fa fa-fw fa-sort");
+        switch (sortParm) {
+            case "naziv_desc":
+                $("#Naziv").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "":
+                $("#Naziv").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4CB_desc":
+                $("#A4CB").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4CB_asc":
+                $("#A4CB").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4B_desc":
+                $("#A4B").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4B_asc":
+                $("#A4B").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4CBO_desc":
+                $("#A4CBO").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4CBO_asc":
+                $("#A4CBO").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+            case "A4BO_desc":
+                $("#A4BO").next().removeClass('fa-sort').removeClass('fa-sort-asc').addClass('fa-sort-desc');
+                break;
+            case "A4BO_asc":
+                $("#A4BO").next().removeClass('fa-sort').removeClass('fa-sort-desc').addClass('fa-sort-asc');
+                break;
+        }
+    }
+</script>
+<script>
+    $('.deleteJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $deleteDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $deleteDiv.empty();
+            $deleteDiv.append(data);
+            $('#deleteModal').modal();
+        });
+
+    });
+</script>
+
+<script>
+    $('.editJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $editDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $editDiv.empty();
+            $editDiv.append(data);
+            $('#editModal').modal();
+        });
+
+    });
+</script>
+
+<script>
+    $('.details').on('click', function () {
+        var $detailsDiv = $('#modalContainer'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $detailsDiv.empty();
+            $detailsDiv.append(data);
+            $('#detailsModal').modal();
+        });
+
+    });
+</script>

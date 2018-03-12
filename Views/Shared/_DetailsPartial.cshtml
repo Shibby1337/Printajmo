@@ -1,0 +1,206 @@
+﻿@model Printajmo.Models.tiskarne
+<!-- Modal -->
+<div id="detailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-modal">
+                <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Podrobnosti
+                </h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body paddingMB">
+                    <div class="row">
+                        <div class="col-lg-5 textMontserrant">
+                            <!--information-->
+                            <h4><span class="glyphicon glyphicon-user"></span>@Model.naziv</h4>
+                            <p><span class="glyphicon glyphicon-home"></span>@Model.ulica, @Model.postnast @Model.mesto</p>
+                            <p><span class="glyphicon glyphicon-phone"></span>@Model.telefonska</p>
+                            <p><span class="glyphicon glyphicon-envelope"></span>@Model.email</p>
+                        </div>
+                        <div class="col-lg-7">
+                            <!-- map -->
+                            <div id="map" class="detailMap"></div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr style="background-color:#ebebeb">
+                                            <td>Format</td>
+                                            <td>Cena</td>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>A4CB</td>
+                                        <td>@Model.a4cb</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A4Barvno</td>
+                                        <td>@Model.a4barvno</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A4CBOboje</td>
+                                        <td>@Model.a4cboboje</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A4BarvnoOboje</td>
+                                        <td>@Model.a4barvnooboje</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <!--COMMENTS-->
+                            <div>
+                                <div class="chatContainer">
+                                    <div class="chatTitleContainer">Comments</div>
+                                    <div class="chatHistoryContainer">
+                                        <div id="comments"></div>
+                                    </div>
+                                    <div class="input-group input-group-sm chatMessageControls">
+                                        <span class="input-group-addon" id="sizing-addon3">Comment</span>
+                                        <input id="msg" type="text" class="form-control" placeholder="Type your message here.." aria-describedby="sizing-addon3">
+                                        <span class="input-group-btn">
+                                            <button id="clearMessageButton" class="btn btn-default" type="button">Clear</button>
+                                            <button id="sendMessageButton" class="btn btn-primary" type="button"><i class="fa fa-send"></i>Send</button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button id="undoSendButton" class="btn btn-default" type="button" disabled><i class="fa fa-undo"></i>Undo</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">PREKLIČI</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("#detailsModal").on("shown.bs.modal", function () {
+        initMap();
+    });
+
+    function initMap() {
+        var _lat = '@Model.latitude';
+        _lat = _lat.replace(/,/g, '.');
+        var _lng = '@Model.longitude';
+        _lng = _lng.replace(/,/g, '.');
+
+        var myMarker = { lat: parseFloat(_lat), lng: parseFloat(_lng) };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myMarker,
+            zoom: 12
+        });
+
+        var marker = new google.maps.Marker({
+            position: myMarker,
+            map: map
+        });
+    }
+</script>
+<!--Commenting-->
+<script>
+    $(document).ready(function () {
+        loadComments();
+        initUIEvents();
+
+    });
+
+    function loadComments() {
+        $.ajax({
+            async: true,
+            url: "/Home/loadComments",
+            data: {
+                tiskarnaID: "@Model.idtiskarne"
+            },
+            type: "Post",
+            success: function (data) {
+                $('#comments').html(data);
+            }
+        });
+    };
+
+
+
+    function initUIEvents() {
+
+        $(".comment").unbind().click(function () {
+
+            var currentComment = $(this).data("commentid");
+
+            $("#commentactions-" + currentComment).slideDown("fast");
+
+        });
+
+
+        $(".commentLi").hover(function () {
+
+            var currentComment = $(this).data("commentid");
+
+            $("#comment-" + currentComment).stop().animate({ opacity: "1", backgroundColor: "#f8f8f8", borderLeftWidth: "4px" }, { duration: 100, complete: function () { } });
+
+        }, function () {
+
+            var currentComment = $(this).data("commentid");
+
+            $("#comment-" + currentComment).stop().animate({ opacity: "1", backgroundColor: "#fff", borderLeftWidth: "1px" }, { duration: 100, complete: function () { } });
+
+            $("#commentactions-" + currentComment).slideUp("fast");
+
+        });
+
+    }
+
+    $("#msg").keypress(function (e) {
+        if (e.which == 13) {
+            saveComment();
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+
+    $("#sendMessageButton").click(function () {
+        saveComment();
+    });
+
+
+    function saveComment() {
+        var msg = $("#msg").val();
+        var currentdate = new Date();
+        var datetime = currentdate.getFullYear() + "-"
+                    + (currentdate.getMonth() + 1) + "-"
+                    + currentdate.getDate() + " "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+        $.ajax({
+            async: true,
+            url: "/Home/sendComment",
+            data: {
+                tiskarnaID: "@Model.idtiskarne", comment: msg, time: datetime, parentID: 0
+            },
+            type: "Post",
+            success: function (data) {
+                $('#comments').html(data);
+            }
+        });
+    }
+
+
+
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyrmm-O3W-VyisTzxPS9AuCjFmGOSZpM8&callback=initMap" type="text/javascript"></script>
+

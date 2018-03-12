@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Printajmo.Models;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace Printajmo.Controllers
 {
@@ -62,6 +64,7 @@ namespace Printajmo.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return PartialView("_PrijavaPartial");
         }
+
         //
         // POST: /Account/Login
         [HttpPost]

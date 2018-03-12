@@ -1,0 +1,933 @@
+﻿@model PagedList.IPagedList<Printajmo.Models.tiskarne>
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Printajmo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Spletna stran, kjer najdete vse fotokopirnice, tiskarne in grafične studie na enem mestu.
+          Uporaba prilagojena posebej za uporabnike in ponudnike.
+          Omogočamo tudi pošiljanje dokumentov do punudnika. Preizkusite!">
+    <meta name="keywords" content="Forokopirnica, kopirnica, grafični studio, tiskarna, tiskanje">
+    <meta name="author" content="Tine Nabernik & Marino Lukovič">
+    <title>Printajmo ~ Vse fotokopirnice, tiskarne in grafični studii na enem mestu</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <!-- Theme CSS -->
+    <link href="css/main.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
+    <![endif]-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    
+
+    <script>
+        function onBegin() {
+            $("#loading").addClass("loading");
+        }
+        function onComplete() {
+            $("#loading").removeClass("loading");
+        }
+    </script>
+</head>
+<body id="page-top" class="index">
+  
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar-custom navbar navbar-default  navbar-fixed-top">
+        <div class="container ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="page-scroll" href="#page-top"><img src="~/img/logos/Logo_with_text2.png" alt="printajmo" class="logo"/></a>
+              
+                @*<a class="navbar-brand page-scroll" href="#page-top">Printajmo.si</a>*@
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!--login/register-->
+            <div class="accountView" id="accountViewMain">
+                @{
+                    var val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+
+                    if (val1 == true)
+                    {
+                        if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                <span class="tooltiptext">Odjava</span>
+
+                            }
+                        }
+                        <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                    }
+                    else
+                    {
+                        <span href="#prijava" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-log-in loginIco"></span><a href="#prijava" data-toggle="modal" data-target="#myModal" class="prijava">Prijava</a>
+                    }
+                }
+            </div>
+
+
+
+            <div class="collapse navbar-collapse custom-nav" id="bs-example-navbar-collapse-1">
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="account-li">
+                        <div class="accountView">
+                            @{
+                                if (val1 == true)
+                                {
+                                    if (Request.IsAuthenticated)
+                                    {
+                                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a class="page-scroll odjavaLink pull-left" href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                            <span class="tooltiptext">Odjava</span>
+
+                                        }
+                                    }
+                                    <a href="#racun" data-toggle="modal" data-target="#modalRacun">@this.User.Identity.Name</a>
+                                }
+                                else
+                                {
+                                    <span href="#prijava" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-log-in loginIco"></span><a href="#prijava" data-toggle="modal" data-target="#myModal" class="prijava">Prijava</a>
+                                }
+                            }
+                        </div>
+                    </li>
+                    <li>
+                        <a class="page-scroll nav-menu" href="#tiskarne">Lokacije</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll nav-menu" href="#portfolio">Uporaba</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll nav-menu" href="#opis">Opis</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll nav-menu" href="#contact">Kontakt</a>
+                    </li>
+                </ul>
+               
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Dobrodošli na spletni strani printajmo.si!</div>
+                <div class="intro-heading">Vse lokacije na enem mestu</div>
+                <a href="#tiskarne" class="page-scroll btn btn-xl">Nadaljuj</a>
+            </div>
+        </div>
+    </header>
+    <button id="Cyka">BLYAT</button>
+    <script>
+        $("#Cyka").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Android/rate",
+                data: { tiskarnaID: '1', ratingValue: '3.0', idUser: '2e8bd70d-f626-4fcb-9adc-e7e5827680a4' },
+                success: function (data) {
+                    alert.html(data);
+                }
+            })
+        });
+    </script>
+    <!-- tiskarne Section -->
+    <section id="tiskarne">
+        <div class="container">
+            <div class="row tabela-title">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Kopirnice, tiskarne in Grafični studii</h2>
+                </div>
+            </div>
+            <div class="row navTable">
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <div class="zemljevid-div">
+                            <img src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+                            <div class="zemljevid-text-div">
+                                <a class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+                            </div>
+                        </div>
+                        <a class="btn icon-btn btn-default btn-add addJS" style="margin-left:5px;" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
+                            <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
+                            Dodaj
+                        </a>
+                    }
+                    else
+                    {
+                        <div id="tmap" class="row zemljevid-div" style="margin-bottom: 0px; margin-right:20px">
+                            <img id="icon-map" src="~/img/map-ico.png" class="ico-map pull-left" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">
+                            <div class="zemljevid-text-div">
+                                <a id="text-zemljevid" class="zemljevid-text" href="#tiskarneModal" data-toggle="modal" data-target="#tiskarneModal">Zemljevid</a>
+                            </div>
+                        </div>
+                        <div id="tadd" class="row zemljevid-div" style="margin-bottom: 0px; margin-right:20px">
+                            <a class="btn icon-btn btn-default btn-add addJS" data-url='@Url.Action("AddNewTiskarnaView", "home")'>
+                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle" style="color:#333"></span>
+                                Dodaj
+                            </a>
+                        </div>
+
+
+                    }
+                    @if (this.User.IsInRole("Tiskarna"))
+                    {
+                        <div id="tmoje" class="row zemljevid-div" style="margin-bottom: 0px;">
+                            <img id="icon-print" src="~/img/print-icon.png" class="ico-map pull-left" onclick="mojeTiskanef()">
+                            <div class="zemljevid-text-div">
+                                <a id="text-moje" class="zemljevid-text" onclick="mojeTiskanef()">Moje poslovalnice</a>
+                            </div>
+                        </div>
+                        <div id="tvse" class="row zemljevid-div" style="margin-bottom: 0px;">
+                            <img id="icon-print" src="~/img/print-icon.png" class="ico-map pull-left" onclick="vseTiskanef()">
+                            <div class="zemljevid-text-div">
+                                <a id="text-moje" class="zemljevid-text" onclick="vseTiskanef()">Vsi ponudniki</a>
+                            </div>
+                        </div>
+                    }
+                    <div class="pull-right">
+                        <input type="text" id="searchString" autocomplete="off" name="searchString" class="form-control iskanje" placeholder="Iskanje" />
+                    </div>
+            </div>
+            <div id="idTabela" class="row">
+                @Html.Partial("_TabelaPartial", Model)
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Uporaba</h2>
+                    <h3 class="section-subheading text-muted">Kratka navodila za uporabo strani.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#dodajanje-tiskarn" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/uporaba/tisk.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Dodajanje</h4>
+                        <p class="text-muted">Tiskarn, fotokopirnic, studiev</p>
+                    </div>
+                </div>
+
+                @*<div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="img/portfolio/startup-framework.png" class="img-responsive" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4>Startup Framework</h4>
+                            <p class="text-muted">Website Design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="img/portfolio/treehouse.png" class="img-responsive" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4>Treehouse</h4>
+                            <p class="text-muted">Website Design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="img/portfolio/golden.png" class="img-responsive" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4>Golden</h4>
+                            <p class="text-muted">Website Design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="img/portfolio/escape.png" class="img-responsive" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4>Escape</h4>
+                            <p class="text-muted">Website Design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item">
+                        <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fa fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="img/portfolio/dreams.png" class="img-responsive" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                            <h4>Dreams</h4>
+                            <p class="text-muted">Website Design</p>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </section>
+    <!-- opis Section -->
+    <section id="opis">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="section-heading" style="text-align:center">opis</h2>
+                   <h3 class="section-subheading text-muted" style="margin-bottom:0px; margin-top:0px;"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>Ali ste kdaj potrebovali storitve tiskanja ali fotokopiranja?</h3>
+                    <br />
+                    <h3 class="section-subheading text-muted" style="margin-bottom:0px; margin-top:0px;"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>Ali veste kje je najbližja in najugodnejša fotokopirnica, tiskarna ali grafični studio?</h3>
+                    <br />
+                    <h3 class="section-subheading text-muted" style="margin-top:0px;"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>Ali ste kdaj pozabili na USB ključek?</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/opis/ideja.png" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4><strong>Printajmo.si</strong></h4>
+                                    <h4 class="subheading"></h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Glede na raziskavo smo ugotovili da nekatere fotokopirnice in grafični studii nimajo ustreznih spletnih strani in podatkov o storitvah, ki jih omogočajo. Veliko podatkov je razpršenih in do danes ni obstajala nobena baza, kjer bi bili vsi ponudniki na enem mestu. Prav zaradi tega smo v  našem mladem kolektivu v tem videli poslovno rešitev in se odločili, da bomo razvili aplikacijo, ki bo vse to omogočala.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/opis/start.png" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Začetki aplikacije</h4>
+                                    <h4 class="subheading"></h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">
+                                        Spletno stran Printajmo.si smo ustanovili leta 2017. 
+                                        Njen namen je zagotoviti hiter dostop informacij o fotokopirnicah in grafičnih studiih po vsej Sloveniji.
+                                         Aplikacija vsebuje informacije o lokaciji in ponudbi prav tako pa omogoča enostavno naročanje storitev kar od doma.
+                                        <strong>Uporabniki</strong> lahko brez težav najdejo najbolj ugodnega ponudnika glede na ceno, oddaljenost, priljubljenost, itd.
+                                        <strong>Ponudniki</strong> lahko urejajo svoje ponudbe in sprejemajo naročila.
+                                         Naša aplikacija omogoča slehernemu uporabniku v Sloveniji, da le z nekaj kliki najde informacije in si zagotovi najugodnejše tiskanje. 
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/opis/uporabniki.png" alt="">
+                            </div>
+                            <div class="timeline-panel" style="text-align: left;">
+                                <div class="timeline-heading">
+                                    <h4>Uporabniki</h4>
+                                    <h4 class="subheading"></h4>
+                                </div>
+                                <div class="timeline-body" >
+                                    <br />
+                                    <p class="text-muted"><span class="glyphicon glyphicon-menu-right"></span>Pregled vseh fotokopirnic, tiskarn in grafičnih studiev</p>
+                                    <br />
+                                    <p class="text-muted"><span class="glyphicon glyphicon-menu-right"></span>Možnost filtracije ponudnikov glede na odaljenost, priljubljenost, ceni storitve</p>
+                                    <br />
+                                    <p class="text-muted"><span class="glyphicon glyphicon-menu-right"></span>Pošiljanje dokumentov ponudnikom</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/opis/tisk.png" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Ponudniki</h4>
+                                    <h4 class="subheading"></h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <br />
+                                    <p class="text-muted">
+                                        <span class="glyphicon glyphicon-menu-right"></span>
+                                        Dodajanje poslovalnic
+                                    </p>
+                                    <br />
+                                    <p class="text-muted"><span class="glyphicon glyphicon-menu-right"></span>
+                                        Urejanje svojih ponudb
+                                    </p>
+                                    <br />
+                                    <p class="text-muted">
+                                        <span class="glyphicon glyphicon-menu-right"></span>
+                                        Sprejem naročil (dokumentov)
+                                    </p> </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image" style="background-color:#F01313">
+                                <h4 style="margin-top: 50px">
+                                    Bodite
+                                    <br>del naše
+                                    <br>zgodbe!
+                                </h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Prijava -->
+    <div id="prijava">
+        @Html.Partial("_LoginRegPartial", new Printajmo.Models.LoginViewModel())
+    </div>
+    <div id="racun">
+        @Html.Partial("_UrediRacun", new Printajmo.Models.ChangePasswordViewModel());
+    </div>
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Kontakt</h2>
+                    <h3 class="section-subheading text-muted">Odgovor vam bomo skušali posredovati v čim krajšem času.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="sentMessage" id="contactForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Ime *" id="name" required data-validation-required-message="Please enter your name.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email *" id="email" required data-validation-required-message="Please enter your email address.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" placeholder="Telefon  *" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Sporočilo *" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl">Pošlji sporočilo</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright"> &copy; Printajmo 2017. Vse pravice pridržane.</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li>
+                            <a href="#">Politika zasebnosti</a>
+                        </li>
+                        <li>
+                            <a href="#">Pogoji uporabe</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Portfolio Modals -->
+    <!-- Use the modals below to showcase details opis your portfolio projects! -->
+    <!-- Portfolio Modal 1 -->
+    <div class="portfolio-modal modal fade" id="dodajanje-tiskarn" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2>Registracija in dodajanje novih fotokopirnic</h2>
+                                <p class="item-intro text-muted">Navodila za dodajanje novih fotokopirnic in studiov.</p>
+                                <img class="img-responsive img-centered" src="img/uporaba/dodajanje.png" alt="dodajanje-fotokopirnica/tiskarna/studio" style="width:150px">
+                                <p>Pred dodajanjem novih fotokopirnic in studiev se je potrebno registrirati kot ponudnik storitev printanja.</p>
+                                <img class="img-responsive img-centered" src="img/uporaba/registracija.png" alt="registracija-fotokopirnica/tiskarna/studio">
+                                <p>Po tem, ko ste registrirani in sprejeti s strani admina kot ponudnik se vam pokaže gumb "Moje tiskarne". </p>
+                                <img class="img-responsive img-centered" src="img/uporaba/mojetiskarne.png" alt="moje tiskarne">
+                                <p>S pritiskom na gumb se vam ponudi možnost za dodajanje lastnih fotokopirnic in studiev. Prav tako se le te izpišejo. Lahko jih urejate ali izbrišete. </p>
+                                <img class="img-responsive img-centered" src="img/uporaba/dodajanjeurejanje.png" alt="dodajanje/urejanje">
+                                <hr />
+                                <h2>Dodajanje</h2>
+                                <img class="img-responsive img-centered" src="img/uporaba/dodaj.png" alt="">
+                                <hr />
+                                <h2>Urejanje</h2>
+                                <img class="img-responsive img-centered" src="img/uporaba/dodaj.png" alt="">
+                                <hr />
+                                <h2>Brisanje</h2>
+                                <img class="img-responsive img-centered" src="img/uporaba/brisi.png" alt="">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Zapri</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 2 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <h2>Project Heading</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-responsive img-centered" src="img/portfolio/startup-framework-preview.png" alt="">
+                                <p><a href="http://designmodo.com/startup/?u=787">Startup Framework</a> is a website builder for professionals. Startup Framework contains components and complex blocks (PSD+HTML Bootstrap themes and templates) which can easily be integrated into almost any design. All of these components are made in the same style, and can easily be integrated into projects, allowing you to create hundreds of solutions for your future projects.</p>
+                                <p>You can preview Startup Framework <a href="http://designmodo.com/startup/?u=787">here</a>.</p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 3 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2>Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-responsive img-centered" src="img/portfolio/treehouse-preview.png" alt="">
+                                <p>Treehouse is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. This is bright and spacious design perfect for people or startup companies looking to showcase their apps or other projects.</p>
+                                <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/treehouse-free-psd-web-template/">FreebiesXpress.com</a>.</p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 4 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2>Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-responsive img-centered" src="img/portfolio/golden-preview.png" alt="">
+                                <p>Start Bootstrap's Agency theme is based on Golden, a free PSD website template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Golden is a modern and clean one page web template that was made exclusively for Best PSD Freebies. This template has a great portfolio, timeline, and meet your team sections that can be easily modified to fit your needs.</p>
+                                <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/golden-free-one-page-web-template/">FreebiesXpress.com</a>.</p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 5 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2>Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-responsive img-centered" src="img/portfolio/escape-preview.png" alt="">
+                                <p>Escape is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Escape is a one page web template that was designed with agencies in mind. This template is ideal for those looking for a simple one page solution to describe your business and offer your tiskarne.</p>
+                                <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/escape-one-page-psd-web-template/">FreebiesXpress.com</a>.</p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 6 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2>Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-responsive img-centered" src="img/portfolio/dreams-preview.png" alt="">
+                                <p>Dreams is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Dreams is a modern one page web template designed for almost any purpose. It’s a beautiful template that’s designed with the Bootstrap framework in mind.</p>
+                                <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/dreams-free-one-page-web-template/">FreebiesXpress.com</a>.</p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="tiskarneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <!-- Modal content-->
+            <div class="modal-content oversize">
+                <div class="modal-header bg-modal">
+                    <button type="button" class="close" data-dismiss="modal" style="padding-right:20px;">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Zemljevid
+                    </h4>
+                </div>
+                <div id="tiskarneMap"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modalContainerOut"></div>
+    <script>
+        function initMap() { }
+        $("#tiskarneModal").on("shown.bs.modal", function () {
+            initMapTiskarne();
+        });
+
+        //function initMap() { }
+
+        var map;
+        function initMapTiskarne() {
+            map = new google.maps.Map(document.getElementById('tiskarneMap'), {
+                zoom: 2,
+                center: new google.maps.LatLng(46.151234, 44.995339),
+                mapTypeId: 'roadmap'
+            });
+
+            var json;
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: "/Home/getTiskarneJson",
+                success: function (data) {
+                    //alert("Cyka   " + JSON.stringify(json));
+                    json = jQuery.parseJSON(data);
+                }
+            })
+            var bounds = new google.maps.LatLngBounds();
+            var markers = [];
+            for (var i = 0; i < json.tiskarne.length; i++) {
+                var _lat = json.tiskarne[i].lat;
+                _lat = _lat.replace(/,/g, '.');
+                var _lng = json.tiskarne[i].lng
+                _lng = _lng.replace(/,/g, '.');
+
+                var latLng = new google.maps.LatLng(parseFloat(_lat), parseFloat(_lng));
+                var contentString = '<div class=\"container\" style=\"width:400px;padding-left:0px;"\">' +
+                    '<div class="row">' +
+                    '<div class="col-sm-5"><img src=\"https://img-new.cgtrader.com/items/56088/building_328_3d_model_242c2761-4a85-4276-bb8a-978173e2d16e.jpg\" style=\"width:150px;\"><img></div>' +
+                    ' <div class="col-sm-7" style="padding-top:20px;"><strong>' + json.tiskarne[i].title +
+                    '</strong> </div>' +
+                    '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 400
+                });
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    zIndex: 9999999,
+                    //label: {
+                    //     text: json.tiskarne[i].title,
+                    //     labelClass: "labels", // the CSS class for the label
+                    //     fontFamily: "Arial",
+                    //     fontWeight: "Bold"
+
+                    //},
+                    title: json.tiskarne[i].title,
+                    icon: {
+                        url: 'https://www.google.si/maps/vt/icon/name=assets/icons/poi/quantum/container_background-2-medium.png,assets/icons/poi/quantum/container-2-medium.png,assets/icons/poi/quantum/dot-2-medium.png&highlight=ffffff,db4437,ffffff&color=ff000000?scale=1',
+                        scale: 10,
+                        labelOrigin: new google.maps.Point(95, 12)
+                    }
+
+                });
+                //marker.addListener('mouseover', function () {
+                //    infowindow.open(map, this);
+                //});
+
+                //// assuming you also want to hide the infowindow when user mouses-out
+                //marker.addListener('mouseout', function () {
+                //    infowindow.close();
+                //});
+
+                marker.addListener('click', function () {
+                    infowindow.open(map, this);
+                });
+
+
+                bounds.extend(marker.position);
+                markers.push(marker);
+            }
+            var options = {
+                imagePath: 'http://pngimg.com/uploads/ak47/ak47_PNG15466.png'
+            };
+
+            var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
+            map.fitBounds(bounds);
+
+
+
+            //var listener = google.maps.event.addListener(map, "idle", function () {
+            //    map.setZoom(9);
+            //    google.maps.event.removeListener(listener);
+            //});
+
+        }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyrmm-O3W-VyisTzxPS9AuCjFmGOSZpM8&callback=initMap" type="text/javascript"></script>
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
+    <!-- Contact Form JavaScript -->
+    @*<script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/contact_me.js"></script>*@
+    <!-- Theme JavaScript -->
+    <script src="js/agency.min.js"></script>
+    @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+    
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#searchString").on('keyup', function (event) {
+            $.ajax({
+                async: false,
+                url: "/Home/AjaxTabela",
+                data: { sortOrder: '', searchString: $('#searchString').val(), currentFilter: "@ViewBag.CurrentFilter", pageSize: "@ViewBag.PageSize" },
+                type: "Get",
+                success: function (data) {
+                    $("#idTabela").html(data);
+                }
+            })
+        });
+    });
+</script>
+<script>
+    $(".prijava").hover(function () {
+        $(".loginIco").toggleClass("colors-printajmo-red");
+    });
+   
+</script>
+<script>
+    $("#text-zemljevid").hover(function () {
+        $("#icon-map").toggleClass("ico-hover");
+    });
+    $("#text-moje").hover(function () {
+        $("#icon-print").toggleClass("ico-hover");
+    });
+</script>
+
+<script>
+    function mojeTiskanef() {
+        $("#searchString").hide();
+        $("#tmap").hide();
+        $("#tmoje").hide();
+
+        $("#tadd").show().addClass("pull-left");
+        $("#tvse").show().addClass("pull-left");
+        
+        $.ajax({
+                type: "GET",
+                url: "/Home/MojeTiskarne",
+                data: {selected: true},
+            success: function (response) {
+                $("#idTabela").html(response);
+                    onComplete();
+                },
+            error: function (e) {
+                    alert("error occured" + e);
+                }
+            });
+    };
+    function vseTiskanef() {
+        $("#searchString").show();
+        $("#tmap").show();
+        $("#tmoje").show();
+
+        $("#tadd").hide();
+        $("#tvse").hide();
+
+        $.ajax({
+            type: "GET",
+            url: "/Home/AjaxTabela",
+            data: {},
+            beforeSend: onBegin(),
+            success: function (response) {
+                $("#idTabela").html(response);
+                onComplete();
+            },
+            error: function (e) {
+                alert("error occured" + e);
+            }
+        });
+    };
+</script>
+
+<script>
+    $('.addJS').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $addDiv = $('#modalContainerOut'),
+            url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $addDiv.empty();
+            $addDiv.append(data);
+            $('#addNewModal').modal();
+        });
+    });
+</script>
